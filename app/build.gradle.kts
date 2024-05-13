@@ -11,7 +11,7 @@ android {
 
     defaultConfig {
         applicationId = "com.ricky.controle_pet"
-        minSdk = 24
+        minSdk = 26
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"

@@ -9,16 +9,21 @@ import javax.inject.Inject
 
 class VacinaRepositoryImpl @Inject constructor(private val vacinaDao: VacinaDao) :
     VacinaRepository {
-    override fun getAllVacina(): Flow<List<VacinaAndVet>> = vacinaDao.getAllVacina()
+    override fun getAllVacinaAndVet(): Flow<List<VacinaAndVet>> = vacinaDao.getAllVacinaAndVet()
 
-    override suspend fun getVacinaById(vacinaId: String): VacinaAndVet =
-        vacinaDao.getVacinaById(vacinaId)
+    override suspend fun getVacinaAndVetById(id: String): VacinaAndVet? =
+        vacinaDao.getByVacinaAndVetId(id)
 
-    override suspend fun insertVacina(vacina: Vacina) = vacinaDao.insertVacina(vacina)
+    override fun getAll(): Flow<List<Vacina>> = vacinaDao.getAll()
 
-    override suspend fun updateVacina(vacina: Vacina) = vacinaDao.updateVacina(vacina)
+    override suspend fun getById(id: String): Vacina? = vacinaDao.getById(id)
 
-    override suspend fun deleteVacina(vacina: Vacina) = vacinaDao.deleteVacina(vacina)
+    override suspend fun insert(entity: Vacina) = vacinaDao.insert(entity)
 
-    override suspend fun deleteVacinaById(vacinaId: String) = vacinaDao.deleteVacinaById(vacinaId)
+    override suspend fun update(entity: Vacina) = vacinaDao.update(entity)
+
+    override suspend fun delete(entity: Vacina) = vacinaDao.delete(entity)
+
+    override suspend fun deleteById(id: String) = vacinaDao.deleteById(id)
+
 }

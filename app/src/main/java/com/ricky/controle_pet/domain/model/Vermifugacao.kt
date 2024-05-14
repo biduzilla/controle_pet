@@ -9,7 +9,7 @@ import java.util.UUID
 @Entity
 data class Vermifugacao(
     @PrimaryKey
-    var id: String = UUID.randomUUID().toString(),
+    var vermifugacaoId: String = UUID.randomUUID().toString(),
     var nome: String = "",
     var peso: BigDecimal = BigDecimal.ZERO,
     var reforco: LocalDate = LocalDate.now()

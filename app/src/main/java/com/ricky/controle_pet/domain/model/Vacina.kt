@@ -8,7 +8,7 @@ import java.util.UUID
 @Entity
 data class Vacina(
     @PrimaryKey(autoGenerate = true)
-    var id:String = UUID.randomUUID().toString(),
+    var vacinaId:String = UUID.randomUUID().toString(),
     var data:LocalDate = LocalDate.now(),
     var nome:String = "",
     var vetId:String = "",

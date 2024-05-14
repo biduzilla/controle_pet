@@ -2,16 +2,16 @@ package com.ricky.controle_pet.data.repository
 
 import com.ricky.controle_pet.data.dao.VacinaDao
 import com.ricky.controle_pet.domain.model.Vacina
-import com.ricky.controle_pet.domain.model.VacinaAndVet
+import com.ricky.controle_pet.domain.model.VetAndVacina
 import com.ricky.controle_pet.domain.repository.VacinaRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class VacinaRepositoryImpl @Inject constructor(private val vacinaDao: VacinaDao) :
     VacinaRepository {
-    override fun getAllVacinaAndVet(): Flow<List<VacinaAndVet>> = vacinaDao.getAllVacinaAndVet()
+    override fun getAllVacinaAndVet(): Flow<List<VetAndVacina>> = vacinaDao.getAllVacinaAndVet()
 
-    override suspend fun getVacinaAndVetById(id: String): VacinaAndVet? =
+    override suspend fun getVacinaAndVetById(id: String): VetAndVacina? =
         vacinaDao.getByVacinaAndVetId(id)
 
     override fun getAll(): Flow<List<Vacina>> = vacinaDao.getAll()

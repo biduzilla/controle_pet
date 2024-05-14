@@ -7,7 +7,7 @@ import java.util.UUID
 @Entity
 data class Vet(
     @PrimaryKey
-    var vetId: String = UUID.randomUUID().toString(),
+    var id: String = UUID.randomUUID().toString(),
+    var crmv: String = "",
     var nome: String = "",
-    var crmv: String = ""
 )

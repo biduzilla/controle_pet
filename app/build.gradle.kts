@@ -72,8 +72,8 @@ dependencies {
     implementation(libs.bundles.coroutines)
     implementation(libs.accompanist.navigation.animation)
     implementation(libs.datastore.preferences)
-    implementation(libs.room.runtime)
-    annotationProcessor(libs.room.compiler)
+    implementation(libs.bundles.room)
+    kapt(libs.room.compiler)
     implementation(libs.bundles.dagger.hilt)
     kapt(libs.bundles.kapt.dagger.hilt)
 }

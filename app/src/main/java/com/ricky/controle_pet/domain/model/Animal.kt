@@ -11,7 +11,7 @@ import java.util.UUID
 @Entity
 data class Animal(
     @PrimaryKey
-    var animalId: String = UUID.randomUUID().toString(),
+    var id: String = UUID.randomUUID().toString(),
     var especie: EspecieEnum = EspecieEnum.CANINO,
     var pelagem: String = "",
     var raca: String = "",

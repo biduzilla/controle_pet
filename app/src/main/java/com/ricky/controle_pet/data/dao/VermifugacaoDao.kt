@@ -2,6 +2,7 @@ package com.ricky.controle_pet.data.dao
 
 import androidx.room.Dao
 import androidx.room.Query
+import androidx.room.Transaction
 import com.ricky.controle_pet.domain.model.Vermifugacao
 import kotlinx.coroutines.flow.Flow
 
@@ -10,9 +11,10 @@ interface VermifugacaoDao:BaseDao<Vermifugacao> {
     @Query("SELECT * FROM Vermifugacao")
     fun getAllVermifugacao(): Flow<List<Vermifugacao>>
 
-    @Query("SELECT * FROM Vermifugacao WHERE vermifugacaoId = :vermifugacaoId")
-    suspend fun getById(vermifugacaoId: String): Vermifugacao?
+    @Query("SELECT * FROM Vermifugacao WHERE id = :id")
+    suspend fun getById(id: String): Vermifugacao?
 
-    @Query("DELETE FROM Vermifugacao WHERE vermifugacaoId = :vermifugacaoId")
-    suspend fun deleteById(vermifugacaoId: String)
+    @Transaction
+    @Query("DELETE FROM Vermifugacao WHERE id = :id")
+    suspend fun deleteById(id: String)
 }

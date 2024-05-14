@@ -3,11 +3,11 @@ package com.ricky.controle_pet.domain.model
 import androidx.room.Embedded
 import androidx.room.Relation
 
-data class VacinaAndVet(
+data class VetAndVacina(
     @Embedded val vet: Vet,
     @Relation(
         parentColumn = "id",
-        entityColumn = "vetId"
+        entityColumn = "vetId",
     )
-    val vacina: Vacina
+    var vacina: List<Vacina> = emptyList(),
 )

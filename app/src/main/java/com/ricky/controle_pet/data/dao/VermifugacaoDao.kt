@@ -11,22 +11,13 @@ import com.ricky.controle_pet.domain.model.Vet
 import kotlinx.coroutines.flow.Flow
 
 @Dao
-interface VermifugacaoDao {
+interface VermifugacaoDao:BaseDao<Vermifugacao> {
     @Query("SELECT * FROM Vermifugacao")
     fun getAllVermifugacao(): Flow<List<Vermifugacao>>
 
     @Query("SELECT * FROM Vermifugacao WHERE vermifugacaoId = :vermifugacaoId")
-    suspend fun getVermifugacaoById(vermifugacaoId: String): Vet
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertVermifugacao(vermifugacao: Vermifugacao)
-
-    @Update(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun updateVermifugacao(vermifugacao: Vermifugacao)
-
-    @Delete
-    suspend fun deleteVermifugacao(vermifugacao: Vermifugacao)
+    suspend fun getById(vermifugacaoId: String): Vermifugacao?
 
     @Query("DELETE FROM Vermifugacao WHERE vermifugacaoId = :vermifugacaoId")
-    suspend fun deleteVermifugacaoById(vermifugacaoId: String)
+    suspend fun deleteById(vermifugacaoId: String)
 }

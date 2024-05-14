@@ -11,22 +11,13 @@ import com.ricky.controle_pet.domain.model.Vet
 import kotlinx.coroutines.flow.Flow
 
 @Dao
-interface AnimalDao {
+interface AnimalDao:BaseDao<Animal> {
     @Query("SELECT * FROM Animal")
-    fun getAllAnimais(): Flow<List<Animal>>
+    fun getAll(): Flow<List<Animal>>
 
     @Query("SELECT * FROM Animal WHERE animalId = :animalId")
-    suspend fun getAnimalById(animalId: String): Vet
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertAnimal(animal: Animal)
-
-    @Update(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun updateAnimal(animal: Animal)
-
-    @Delete
-    suspend fun deleteAnimal(animal: Animal)
+    suspend fun getById(animalId: String): Animal?
 
     @Query("DELETE FROM Animal WHERE animalId = :animalId")
-    suspend fun deleteAnimalById(animalId: String)
+    suspend fun deleteById(animalId: String)
 }

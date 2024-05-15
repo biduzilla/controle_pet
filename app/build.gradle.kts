@@ -71,6 +71,7 @@ dependencies {
 
     implementation(libs.bundles.coroutines)
     implementation(libs.accompanist.navigation.animation)
+    implementation(libs.material.icons.extended)
     implementation(libs.datastore.preferences)
     implementation(libs.bundles.room)
     kapt(libs.room.compiler)

@@ -3,6 +3,7 @@ package com.ricky.controle_pet.di
 import android.content.Context
 import androidx.room.Room
 import com.ricky.controle_pet.data.AppDatabase
+import com.ricky.controle_pet.data.DataStoreUtil
 import com.ricky.controle_pet.data.dao.AnimalDao
 import com.ricky.controle_pet.data.dao.VacinaDao
 import com.ricky.controle_pet.data.dao.VermifugacaoDao
@@ -33,6 +34,12 @@ object AppModule {
             klass = AppDatabase::class.java,
             name = "app_db"
         ).fallbackToDestructiveMigration().build()
+    }
+
+    @Singleton
+    @Provides
+    fun provideDataStoreUtil(@ApplicationContext context: Context): DataStoreUtil {
+        return DataStoreUtil(context)
     }
 
     @Singleton

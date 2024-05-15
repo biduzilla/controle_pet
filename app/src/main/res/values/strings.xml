@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Controle Pet+</string>
+    <string name="cadastrar_animal">Cadastrar Animal+</string>
+    <string name="campo_obrigatorio">Campo obrigatório</string>
 </resources>

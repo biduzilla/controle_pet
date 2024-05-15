@@ -21,7 +21,7 @@ import com.ricky.controle_pet.R
 import com.ricky.controle_pet.navigation.Screens
 
 @Composable
-fun SpashScreen(
+fun SplashScreen(
     state: SplashState,
     navController: NavController
 ) {

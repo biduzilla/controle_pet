@@ -16,6 +16,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AddAPhoto
 import androidx.compose.material.icons.filled.KeyboardArrowLeft
+import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CenterAlignedTopAppBar
@@ -27,7 +28,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -36,6 +36,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.ricky.controle_pet.R
+import com.ricky.controle_pet.domain.enums.EspecieEnum
+import com.ricky.controle_pet.domain.enums.PorteEnum
+import com.ricky.controle_pet.presentation.form.components.DropdownCompose
+import com.ricky.controle_pet.presentation.form.components.TextFieldCompose
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -107,6 +111,60 @@ fun FormScreen(
                         modifier = Modifier.fillMaxSize()
                     )
                 }
+            }
+            TextFieldCompose(
+                value = state.nome,
+                isError = state.onErrorNome,
+                label = R.string.nome_pet
+            ) {
+                onEvent(FormEvent.OnChangeNome(it))
+            }
+            DropdownCompose(
+                label = state.especie.value,
+                list = EspecieEnum.entries.toTypedArray()
+            ) {
+                onEvent(FormEvent.OnChangeEspecie(it))
+            }
+            TextFieldCompose(
+                value = state.pelagem,
+                isError = state.onErrorPelagem,
+                label = R.string.pelagem
+            ) {
+                onEvent(FormEvent.OnChangePelagem(it))
+            }
+            TextFieldCompose(
+                value = state.raca,
+                isError = state.onErrorRaca,
+                label = R.string.raca
+            ) {
+                onEvent(FormEvent.OnChangeRaca(it))
+            }
+            DropdownCompose(
+                label = state.porte.value,
+                list = PorteEnum.entries.toTypedArray()
+            ) {
+                onEvent(FormEvent.OnChangePorte(it))
+            }
+
+            Card(
+                shape = RoundedCornerShape(10.dp),
+                elevation = CardDefaults.cardElevation(10.dp),
+                onClick = {
+                    onEvent(FormEvent.ShowDataPicker)
+                },
+                colors = CardDefaults.cardColors(
+                    containerColor = MaterialTheme.colorScheme.primaryContainer
+                )
+            ) {
+                Text(
+                    text = state.idade.ifBlank { stringResource(id = R.string.raca) },
+                    style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Bold),
+                    modifier = Modifier.padding(16.dp)
+                )
+            }
+            
+            Button(onClick = { /*TODO*/ }) {
+                
             }
         }
     }

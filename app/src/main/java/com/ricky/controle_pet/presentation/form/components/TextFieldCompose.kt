@@ -2,6 +2,7 @@ package com.ricky.controle_pet.presentation.form.components
 
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -16,6 +17,7 @@ import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import com.ricky.controle_pet.R
 import com.ricky.controle_pet.ui.theme.ErrorLight
 
@@ -31,7 +33,7 @@ fun TextFieldCompose(
     onChange: (String) -> Unit
 ) {
     TextField(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = modifier.fillMaxWidth(),
         value = value,
         onValueChange = { onChange(it) },
         keyboardOptions = KeyboardOptions(
@@ -68,6 +70,7 @@ fun TextFieldCompose(
 @Composable
 private fun TextFieldComposePrev() {
     TextFieldCompose(
+        modifier = Modifier.padding(16.dp),
         value = "value",
         isError = true,
         label = R.string.cadastrar_animal

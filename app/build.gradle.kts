@@ -70,6 +70,7 @@ dependencies {
     debugImplementation(libs.androidx.ui.test.manifest)
 
     implementation(libs.bundles.coroutines)
+    implementation(libs.material3.alpha02)
     implementation(libs.accompanist.navigation.animation)
     implementation(libs.material.icons.extended)
     implementation(libs.datastore.preferences)

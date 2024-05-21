@@ -8,7 +8,7 @@ import java.time.LocalDate
 data class FormState(
     var nome: String = "",
     var especie: EspecieEnum = EspecieEnum.CANINO,
-    var pelage: String = "",
+    var pelagem: String = "",
     var raca: String = "",
     var porte: PorteEnum = PorteEnum.PEQUENO,
     var idade: String = "",

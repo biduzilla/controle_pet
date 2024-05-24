@@ -1,5 +1,6 @@
 package com.ricky.controle_pet.presentation.form
 
+import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
@@ -28,6 +29,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
@@ -40,6 +42,7 @@ import androidx.navigation.NavController
 import com.ricky.controle_pet.R
 import com.ricky.controle_pet.domain.enums.EspecieEnum
 import com.ricky.controle_pet.domain.enums.PorteEnum
+import com.ricky.controle_pet.domain.enums.SexoEnum
 import com.ricky.controle_pet.presentation.form.components.DropdownCompose
 import com.ricky.controle_pet.presentation.form.components.TextFieldCompose
 
@@ -54,8 +57,18 @@ fun FormScreen(
     val photoPicker =
         rememberLauncherForActivityResult(contract = ActivityResultContracts.PickVisualMedia(),
             onResult = {
-                onEvent(FormEvent.SelectPhoto(it))
+                onEvent(FormEvent.SelectPhoto(it, context))
             })
+
+    if (state.onErrorPhoto) {
+        Toast.makeText(context, "Escolha uma foto", Toast.LENGTH_SHORT).show()
+    }
+    if (state.onErrorNascimento) {
+        Toast.makeText(context, "Escolha uma data de nascimento", Toast.LENGTH_SHORT).show()
+    }
+    if (state.isOk) {
+        navController.popBackStack()
+    }
 
     Scaffold(topBar = {
         CenterAlignedTopAppBar(title = {
@@ -80,13 +93,16 @@ fun FormScreen(
         Column(
             Modifier
                 .padding(paddingValues)
+                .padding(24.dp)
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState()),
-            verticalArrangement = Arrangement.spacedBy(16.dp)
+            verticalArrangement = Arrangement.spacedBy(16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Card(
                 modifier = Modifier
                     .size(200.dp)
+                    .padding(bottom = 16.dp)
                     .clickable {
                         photoPicker.launch(
                             PickVisualMediaRequest(
@@ -127,6 +143,14 @@ fun FormScreen(
             ) {
                 onEvent(FormEvent.OnChangeEspecie(it))
             }
+
+            DropdownCompose(
+                label = state.sexo.value,
+                list = SexoEnum.entries.toTypedArray()
+            ) {
+                onEvent(FormEvent.OnChangeSexo(it))
+            }
+
             TextFieldCompose(
                 value = state.pelagem,
                 isError = state.onErrorPelagem,
@@ -159,7 +183,7 @@ fun FormScreen(
                 )
             ) {
                 Text(
-                    text = state.idade.ifBlank { stringResource(id = R.string.raca) },
+                    text = state.idade.ifBlank { stringResource(id = R.string.data_nascimento) },
                     style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Bold),
                     modifier = Modifier.padding(16.dp)
                 )
@@ -168,13 +192,13 @@ fun FormScreen(
             Button(
                 modifier = Modifier
                     .padding(
-                        vertical = 8.dp,
-                        horizontal = 16.dp
+                        vertical = 4.dp,
+                        horizontal = 8.dp
                     )
                     .fillMaxWidth(),
                 onClick = { onEvent(FormEvent.AddPet) }) {
                 Text(
-                    text = stringResource(id = R.string.salvar_animal) ,
+                    text = stringResource(id = R.string.salvar_animal),
                     style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Bold),
                     modifier = Modifier.padding(16.dp)
                 )
@@ -188,6 +212,6 @@ fun FormScreen(
 private fun FormScreenPreview() {
     val context = LocalContext.current
     FormScreen(state = FormState(), navController = NavController(context)) {
-        
+
     }
 }

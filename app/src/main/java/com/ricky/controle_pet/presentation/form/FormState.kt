@@ -3,6 +3,7 @@ package com.ricky.controle_pet.presentation.form
 import android.graphics.Bitmap
 import com.ricky.controle_pet.domain.enums.EspecieEnum
 import com.ricky.controle_pet.domain.enums.PorteEnum
+import com.ricky.controle_pet.domain.enums.SexoEnum
 import java.time.LocalDate
 
 data class FormState(
@@ -14,11 +15,12 @@ data class FormState(
     var idade: String = "",
     var nascimento: LocalDate = LocalDate.now(),
     var foto: Bitmap? = null,
+    var sexo:SexoEnum = SexoEnum.MACHO,
     var isShowDataPicker: Boolean = false,
     var onErrorNome: Boolean = false,
     var onErrorPelagem: Boolean = false,
     var onErrorRaca: Boolean = false,
     var onErrorNascimento: Boolean = false,
-    var onErrorFoto: Boolean = false,
+    var onErrorPhoto: Boolean = false,
     var isOk: Boolean = false
 )

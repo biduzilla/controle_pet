@@ -20,7 +20,7 @@ import com.ricky.controle_pet.domain.model.Vet
         Vermifugacao::class,
         Animal::class
     ],
-    version = 1,
+    version = 2,
     exportSchema = false
 )
 @TypeConverters(Converters::class)

@@ -7,4 +7,5 @@
     <string name="raca">Raça</string>
     <string name="data_nascimento">Data de nascimento</string>
     <string name="escolher_data">Escolha uma data</string>
+    <string name="salvar_animal">Cadastrar Animal</string>
 </resources>

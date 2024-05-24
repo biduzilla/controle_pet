@@ -12,6 +12,7 @@ sealed interface FormEvent {
     data class OnChangeRaca(val raca: String) : FormEvent
     data class OnChangeEspecie(val especie: EspecieEnum) : FormEvent
     data class OnChangePorte(val porte: PorteEnum) : FormEvent
+    data object ShowDataPicker : FormEvent
+    data object AddPet : FormEvent
 
-    data object ShowDataPicker:FormEvent
 }

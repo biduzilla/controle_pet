@@ -8,6 +8,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
@@ -33,6 +34,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.ricky.controle_pet.R
@@ -162,10 +164,30 @@ fun FormScreen(
                     modifier = Modifier.padding(16.dp)
                 )
             }
-            
-            Button(onClick = { /*TODO*/ }) {
-                
+
+            Button(
+                modifier = Modifier
+                    .padding(
+                        vertical = 8.dp,
+                        horizontal = 16.dp
+                    )
+                    .fillMaxWidth(),
+                onClick = { onEvent(FormEvent.AddPet) }) {
+                Text(
+                    text = stringResource(id = R.string.salvar_animal) ,
+                    style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Bold),
+                    modifier = Modifier.padding(16.dp)
+                )
             }
         }
+    }
+}
+
+@Preview
+@Composable
+private fun FormScreenPreview() {
+    val context = LocalContext.current
+    FormScreen(state = FormState(), navController = NavController(context)) {
+        
     }
 }

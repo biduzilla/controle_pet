@@ -5,11 +5,13 @@ import androidx.lifecycle.viewModelScope
 import com.ricky.controle_pet.domain.model.Animal
 import com.ricky.controle_pet.domain.repository.AnimalRepository
 import com.ricky.controle_pet.utils.bitmapToByteArray
+import com.ricky.controle_pet.utils.calculateAgeAndMonths
 import com.ricky.controle_pet.utils.uriToBitmap
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import java.time.LocalDate
 import javax.inject.Inject
 
 @HiltViewModel
@@ -129,6 +131,14 @@ class FormViewModel @Inject constructor(private val animalRepository: AnimalRepo
             is FormEvent.OnChangeSexo -> {
                 _state.value = _state.value.copy(
                     sexo = event.sexo,
+                )
+            }
+
+            is FormEvent.OnChangeDate -> {
+                _state.value = _state.value.copy(
+                    nascimento = LocalDate.ofEpochDay(event.date),
+                    idade = calculateAgeAndMonths(LocalDate.ofEpochDay(event.date)),
+                    onErrorNascimento = false
                 )
             }
         }

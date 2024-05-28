@@ -18,4 +18,6 @@ sealed interface FormEvent {
     data object ShowDataPicker : FormEvent
     data object AddPet : FormEvent
 
+    data class OnChangeDate(val date: Long) : FormEvent
+
 }

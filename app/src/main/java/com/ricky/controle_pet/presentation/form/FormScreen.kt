@@ -17,6 +17,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AddAPhoto
+import androidx.compose.material.icons.filled.ArrowBackIosNew
 import androidx.compose.material.icons.filled.KeyboardArrowLeft
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
@@ -43,6 +44,7 @@ import com.ricky.controle_pet.R
 import com.ricky.controle_pet.domain.enums.EspecieEnum
 import com.ricky.controle_pet.domain.enums.PorteEnum
 import com.ricky.controle_pet.domain.enums.SexoEnum
+import com.ricky.controle_pet.presentation.form.components.DateDialog
 import com.ricky.controle_pet.presentation.form.components.DropdownCompose
 import com.ricky.controle_pet.presentation.form.components.TextFieldCompose
 
@@ -76,16 +78,15 @@ fun FormScreen(
                 text = stringResource(id = R.string.cadastrar_animal),
                 style = MaterialTheme.typography.headlineMedium.copy(
                     fontWeight = FontWeight.Bold,
-                    color = MaterialTheme.colorScheme.onPrimary
                 )
             )
         },
             navigationIcon = {
                 IconButton(onClick = { navController.popBackStack() }) {
                     Icon(
-                        imageVector = Icons.Filled.KeyboardArrowLeft,
+                        modifier = Modifier.size(28.dp),
+                        imageVector = Icons.Default.ArrowBackIosNew,
                         contentDescription = null,
-                        tint = MaterialTheme.colorScheme.onPrimary
                     )
                 }
             })
@@ -189,6 +190,12 @@ fun FormScreen(
                 )
             }
 
+            if (state.isShowDataPicker) {
+                DateDialog(isPassado = true,
+                    onDimiss = { onEvent(FormEvent.ShowDataPicker) },
+                    onChangeDate = { onEvent(FormEvent.OnChangeDate(it)) })
+            }
+
             Button(
                 modifier = Modifier
                     .padding(
@@ -196,10 +203,11 @@ fun FormScreen(
                         horizontal = 8.dp
                     )
                     .fillMaxWidth(),
+                shape = RoundedCornerShape(10.dp),
                 onClick = { onEvent(FormEvent.AddPet) }) {
                 Text(
                     text = stringResource(id = R.string.salvar_animal),
-                    style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Bold),
+                    style = MaterialTheme.typography.headlineSmall.copy(fontWeight = FontWeight.Bold),
                     modifier = Modifier.padding(16.dp)
                 )
             }

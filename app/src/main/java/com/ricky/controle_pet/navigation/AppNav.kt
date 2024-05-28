@@ -12,8 +12,9 @@ import androidx.navigation.NavGraphBuilder
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
+import com.ricky.controle_pet.presentation.pets.PetsScreen
+import com.ricky.controle_pet.presentation.pets.PetsViewModel
 import com.ricky.controle_pet.presentation.splash.SplashScreen
-import com.ricky.controle_pet.presentation.splash.SplashState
 import com.ricky.controle_pet.presentation.splash.SplashViewModel
 
 @OptIn(ExperimentalAnimationApi::class)
@@ -22,11 +23,18 @@ fun AppNav() {
     val navController = rememberAnimatedNavController()
 
     AnimatedNavHost(navController = navController, startDestination = Screens.SplashScreen.route) {
-        composableSlideHorizontally(Screens.SplashScreen.route){
+        composableSlideHorizontally(Screens.SplashScreen.route) {
             val viewModel = hiltViewModel<SplashViewModel>()
             val state by viewModel.state.collectAsState()
 
             SplashScreen(state = state, navController = navController)
+        }
+
+        composableSlideHorizontally(Screens.PetsScreen.route) {
+            val viewModel = hiltViewModel<PetsViewModel>()
+            val state by viewModel.state.collectAsState()
+
+            PetsScreen(state = state, navController = navController)
         }
     }
 

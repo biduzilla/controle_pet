@@ -212,6 +212,5 @@ fun FormScreen(
 private fun FormScreenPreview() {
     val context = LocalContext.current
     FormScreen(state = FormState(), navController = NavController(context)) {
-
     }
 }

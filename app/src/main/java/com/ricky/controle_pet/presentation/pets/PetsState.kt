@@ -1,7 +1,7 @@
-package com.ricky.controle_pet.presentation.home
+package com.ricky.controle_pet.presentation.pets
 
 import com.ricky.controle_pet.domain.model.Animal
 
-data class HomeState(
+data class PetsState(
     var animais: List<Animal> = emptyList()
 )

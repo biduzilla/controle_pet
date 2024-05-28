@@ -1,4 +1,4 @@
-package com.ricky.controle_pet.presentation.home
+package com.ricky.controle_pet.presentation.pets
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -10,9 +10,9 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class HomeViewModel @Inject constructor(private val animalRepository: AnimalRepository) :
+class PetsViewModel @Inject constructor(private val animalRepository: AnimalRepository) :
     ViewModel() {
-    private val _state = MutableStateFlow(HomeState())
+    private val _state = MutableStateFlow(PetsState())
     val state = _state.asStateFlow()
 
     init {

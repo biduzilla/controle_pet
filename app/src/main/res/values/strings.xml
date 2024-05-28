@@ -5,7 +5,7 @@
     <string name="nome_pet">Nome do Pet</string>
     <string name="pelagem">Pelagem</string>
     <string name="raca">Raça</string>
-    <string name="meus_animais">Meus Pet</string>
+    <string name="meus_animais">Meus Pets</string>
     <string name="data_nascimento">Data de nascimento</string>
     <string name="escolher_data">Escolha uma data</string>
     <string name="salvar_animal">Cadastrar Pet</string>

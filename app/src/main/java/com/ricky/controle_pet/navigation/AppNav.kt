@@ -12,6 +12,8 @@ import androidx.navigation.NavGraphBuilder
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
+import com.ricky.controle_pet.presentation.form.FormScreen
+import com.ricky.controle_pet.presentation.form.FormViewModel
 import com.ricky.controle_pet.presentation.pets.PetsScreen
 import com.ricky.controle_pet.presentation.pets.PetsViewModel
 import com.ricky.controle_pet.presentation.splash.SplashScreen
@@ -35,6 +37,13 @@ fun AppNav() {
             val state by viewModel.state.collectAsState()
 
             PetsScreen(state = state, navController = navController)
+        }
+
+        composableSlideHorizontally(Screens.FormScreen.route) {
+            val viewModel = hiltViewModel<FormViewModel>()
+            val state by viewModel.state.collectAsState()
+
+            FormScreen(state = state, navController = navController, onEvent = viewModel::onEvent)
         }
     }
 

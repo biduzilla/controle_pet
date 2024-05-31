@@ -15,7 +15,6 @@ data class FormState(
     var porte: PorteEnum = PorteEnum.PEQUENO,
     var idade: String = "",
     var nascimento: LocalDate = LocalDate.now(),
-    var uri: Uri? = null,
     var foto: Bitmap? = null,
     var sexo:SexoEnum = SexoEnum.MACHO,
     var isShowDataPicker: Boolean = false,

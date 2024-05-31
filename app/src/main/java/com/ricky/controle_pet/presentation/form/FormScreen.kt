@@ -1,5 +1,8 @@
 package com.ricky.controle_pet.presentation.form
 
+import android.Manifest
+import android.content.pm.PackageManager
+import android.net.Uri
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
@@ -8,11 +11,8 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
@@ -21,8 +21,6 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AddAPhoto
 import androidx.compose.material.icons.filled.ArrowBackIosNew
-import androidx.compose.material.icons.filled.CameraAlt
-import androidx.compose.material.icons.filled.Image
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -31,11 +29,11 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.asImageBitmap
@@ -45,6 +43,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
 import com.ricky.controle_pet.R
 import com.ricky.controle_pet.domain.enums.EspecieEnum
@@ -52,7 +51,9 @@ import com.ricky.controle_pet.domain.enums.PorteEnum
 import com.ricky.controle_pet.domain.enums.SexoEnum
 import com.ricky.controle_pet.presentation.form.components.DateDialog
 import com.ricky.controle_pet.presentation.form.components.DropdownCompose
+import com.ricky.controle_pet.presentation.form.components.ModalBottomSheetCompose
 import com.ricky.controle_pet.presentation.form.components.TextFieldCompose
+import com.ricky.controle_pet.utils.getTempUri
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -62,28 +63,36 @@ fun FormScreen(
     onEvent: (FormEvent) -> Unit
 ) {
     val context = LocalContext.current
-    val sheetState = rememberModalBottomSheetState()
+    val tempUri = remember { mutableStateOf<Uri?>(null) }
+
     val photoPicker =
         rememberLauncherForActivityResult(contract = ActivityResultContracts.PickVisualMedia(),
             onResult = {
                 onEvent(FormEvent.SelectPhoto(it, context))
             })
 
+    val cameraLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.TakePicture(),
+        onResult = { success ->
+            if (success) {
+                tempUri.value?.let {
+                    onEvent(FormEvent.SelectPhoto(it, context))
+                }
+            }
+        }
+    )
+
     val cameraPermissionLauncher =
         rememberLauncherForActivityResult(contract = ActivityResultContracts.RequestPermission()) { isGranted: Boolean ->
             if (isGranted) {
-
+                tempUri.value = context.getTempUri()
+                tempUri.value?.let {
+                    cameraLauncher.launch(it)
+                }
             } else {
-
+                Toast.makeText(context, "camera permission is denied", Toast.LENGTH_SHORT).show()
             }
         }
-
-    val takePhotoLauncher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.TakePicture(),
-        onResult = { isSaved ->
-
-        }
-    )
 
     if (state.onErrorPhoto) {
         Toast.makeText(context, "Escolha uma foto", Toast.LENGTH_SHORT).show()
@@ -235,63 +244,36 @@ fun FormScreen(
             }
         }
         if (state.isShowBottomSheet) {
-            ModalBottomSheet(
-                onDismissRequest = { onEvent(FormEvent.ShowBottomSheet) },
-                sheetState = sheetState
-            ) {
-                Column(
-                    modifier = Modifier.padding(24.dp),
-                    verticalArrangement = Arrangement.Top
-                ) {
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .clickable {
-
-                            },
-                        horizontalArrangement = Arrangement.spacedBy(6.dp)
+            ModalBottomSheetCompose(
+                onDismiss = { onEvent(FormEvent.ShowBottomSheet) },
+                onTakePhotoClick = {
+                    onEvent(FormEvent.ShowBottomSheet)
+                    val permission = Manifest.permission.CAMERA
+                    if (ContextCompat.checkSelfPermission(
+                            context,
+                            permission
+                        ) == PackageManager.PERMISSION_GRANTED
                     ) {
-                        Icon(
-                            imageVector = Icons.Default.CameraAlt,
-                            contentDescription = null
-                        )
-                        Text(
-                            modifier = Modifier.padding(vertical = 4.dp),
-                            text = stringResource(id = R.string.camera),
-                            style = MaterialTheme.typography.titleMedium
-                        )
+                        tempUri.value = context.getTempUri()
+                        tempUri.value?.let {
+                            cameraLauncher.launch(it)
+                        }
+                    } else {
+                        cameraPermissionLauncher.launch(permission)
                     }
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(vertical = 16.dp)
-                            .clickable {
-                                photoPicker.launch(
-                                    PickVisualMediaRequest(
-                                        ActivityResultContracts.PickVisualMedia.ImageOnly
-                                    )
-                                )
-                            },
-                        horizontalArrangement = Arrangement.spacedBy(6.dp)
-                    ) {
-                        Icon(
-                            modifier = Modifier.padding(vertical = 4.dp),
-                            imageVector = Icons.Default.Image,
-                            contentDescription = null
+                },
+                onPhotoGalleryClick = {
+                    onEvent(FormEvent.ShowBottomSheet)
+                    photoPicker.launch(
+                        PickVisualMediaRequest(
+                            ActivityResultContracts.PickVisualMedia.ImageOnly
                         )
-                        Text(
-                            modifier = Modifier.padding(vertical = 4.dp),
-                            text = stringResource(id = R.string.galeria),
-                            style = MaterialTheme.typography.titleMedium
-                        )
-                    }
-                    Spacer(modifier = Modifier.height(32.dp))
-                }
-
-            }
+                    )
+                })
         }
     }
 }
+
 
 @Preview
 @Composable

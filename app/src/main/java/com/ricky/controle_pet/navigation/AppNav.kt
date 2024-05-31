@@ -24,7 +24,7 @@ import com.ricky.controle_pet.presentation.splash.SplashViewModel
 fun AppNav() {
     val navController = rememberAnimatedNavController()
 
-    AnimatedNavHost(navController = navController, startDestination = Screens.SplashScreen.route) {
+    AnimatedNavHost(navController = navController, startDestination = Screens.FormScreen.route) {
         composableSlideHorizontally(Screens.SplashScreen.route) {
             val viewModel = hiltViewModel<SplashViewModel>()
             val state by viewModel.state.collectAsState()

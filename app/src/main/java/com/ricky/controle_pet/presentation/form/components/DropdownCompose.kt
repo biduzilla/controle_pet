@@ -1,8 +1,10 @@
 package com.ricky.controle_pet.presentation.form.components
 
 import androidx.annotation.StringRes
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
@@ -21,6 +23,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import com.ricky.controle_pet.R
 import com.ricky.controle_pet.domain.enums.EnumWithValue
 import com.ricky.controle_pet.domain.enums.SexoEnum
@@ -36,7 +39,10 @@ fun <T : Enum<T>> DropdownCompose(
 ) {
     var expanded by remember { mutableStateOf(false) }
 
-    Column(modifier = modifier) {
+    Column(
+        modifier = modifier,
+        verticalArrangement = Arrangement.spacedBy(10.dp)
+    ) {
         Text(
             text = stringResource(id = label),
             style = MaterialTheme.typography.bodyLarge.copy(
@@ -52,6 +58,7 @@ fun <T : Enum<T>> DropdownCompose(
                 modifier = Modifier
                     .menuAnchor()
                     .fillMaxWidth(),
+                shape = RoundedCornerShape(10.dp),
                 colors = TextFieldDefaults.colors(
                     focusedContainerColor = MaterialTheme.colorScheme.primaryContainer,
                     unfocusedContainerColor = MaterialTheme.colorScheme.primaryContainer,

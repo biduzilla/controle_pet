@@ -2,8 +2,10 @@ package com.ricky.controle_pet.presentation.form.components
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -52,7 +54,7 @@ fun ModalBottomSheetCompose(
                 title = stringResource(id = R.string.galeria),
                 icon = Icons.Default.Image,
                 onClick = {
-                    onTakePhotoClick.invoke()
+                    onPhotoGalleryClick.invoke()
                 }
             ),
         )
@@ -107,6 +109,7 @@ fun ModalBottomSheetContent(
                     }
                 )
             }
+            Spacer(modifier = Modifier.height(38.dp))
         }
     }
 }

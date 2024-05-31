@@ -1,6 +1,7 @@
 package com.ricky.controle_pet.presentation.form.components
 
 import androidx.annotation.StringRes
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -38,7 +39,10 @@ fun TextFieldCompose(
     ime: ImeAction = ImeAction.Next,
     onChange: (String) -> Unit
 ) {
-    Column(modifier = modifier) {
+    Column(
+        modifier = modifier,
+        verticalArrangement = Arrangement.spacedBy(10.dp)
+    ) {
         Text(
             text = stringResource(id = label),
             style = MaterialTheme.typography.bodyLarge.copy(

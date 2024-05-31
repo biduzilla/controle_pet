@@ -1,6 +1,5 @@
 package com.ricky.controle_pet.presentation.form
 
-import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ricky.controle_pet.domain.model.Animal
@@ -12,7 +11,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import java.io.File
 import java.time.LocalDate
 import java.time.ZoneId
 import java.util.Calendar
@@ -21,7 +19,6 @@ import javax.inject.Inject
 
 @HiltViewModel
 class FormViewModel @Inject constructor(
-    context: Context,
     private val animalRepository: AnimalRepository
 ) :
     ViewModel() {
@@ -120,7 +117,6 @@ class FormViewModel @Inject constructor(
             is FormEvent.SelectPhoto -> {
                 event.uri?.let {
                     _state.value = _state.value.copy(
-                        uri = event.uri,
                         foto = uriToBitmap(uri = event.uri, context = event.context),
                         onErrorPhoto = false
                     )

@@ -78,6 +78,13 @@ fun FormScreen(
             }
         }
 
+    val takePhotoLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.TakePicture(),
+        onResult = { isSaved ->
+
+        }
+    )
+
     if (state.onErrorPhoto) {
         Toast.makeText(context, "Escolha uma foto", Toast.LENGTH_SHORT).show()
     }

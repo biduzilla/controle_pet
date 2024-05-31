@@ -9,4 +9,11 @@
     <string name="data_nascimento">Data de nascimento</string>
     <string name="escolher_data">Escolha uma data</string>
     <string name="salvar_animal">Cadastrar Pet</string>
+    <string name="camera">Camera</string>
+    <string name="galeria">Galeria</string>
+    <string name="sexo">Sexo</string>
+    <string name="especie">Espécie</string>
+    <string name="tamanho">Tamanho</string>
+    <string name="cancelar">Cancelar</string>
+    <string name="fileprovider">com.ricky.controle_pet.components.fileprovider</string>
 </resources>

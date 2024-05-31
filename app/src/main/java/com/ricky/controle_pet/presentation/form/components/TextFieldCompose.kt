@@ -1,8 +1,10 @@
 package com.ricky.controle_pet.presentation.form.components
 
 import androidx.annotation.StringRes
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -36,51 +38,57 @@ fun TextFieldCompose(
     ime: ImeAction = ImeAction.Next,
     onChange: (String) -> Unit
 ) {
-    OutlinedTextField(
-        modifier = modifier.fillMaxWidth(),
-        value = value,
-        label= {
-            Text(
-                text = stringResource(id = label),
-                style = MaterialTheme.typography.bodyLarge.copy(
-                    fontWeight = FontWeight.Bold,
-                    color = MaterialTheme.colorScheme.onPrimaryContainer
-                ),
-            )
-        },
-        onValueChange = { onChange(it) },
-        keyboardOptions = KeyboardOptions(
-            capitalization = KeyboardCapitalization.Sentences,
-            autoCorrect = true,
-            keyboardType = keyboardType,
-            imeAction = ime
-        ),
-        colors = TextFieldDefaults.colors(
-            focusedContainerColor = Color.Transparent,
-            unfocusedContainerColor = Color.Transparent
-        ),
-        leadingIcon = if (icon != null) {
-            {
-                Icon(
-                    imageVector = icon,
-                    contentDescription = stringResource(id = label)
-                )
+    Column(modifier = modifier) {
+        Text(
+            text = stringResource(id = label),
+            style = MaterialTheme.typography.bodyLarge.copy(
+                fontWeight = FontWeight.Bold,
+                color = MaterialTheme.colorScheme.onPrimaryContainer
+            ),
+        )
+        TextField(
+            modifier = Modifier
+                .fillMaxWidth(),
+            shape = RoundedCornerShape(10.dp),
+            value = value,
+            onValueChange = { onChange(it) },
+            keyboardOptions = KeyboardOptions(
+                capitalization = KeyboardCapitalization.Sentences,
+                autoCorrect = true,
+                keyboardType = keyboardType,
+                imeAction = ime
+            ),
+            colors = TextFieldDefaults.colors(
+                focusedContainerColor = MaterialTheme.colorScheme.primaryContainer,
+                unfocusedContainerColor = MaterialTheme.colorScheme.primaryContainer,
+                disabledIndicatorColor = Color.Transparent,
+                focusedIndicatorColor = Color.Transparent,
+                unfocusedIndicatorColor = Color.Transparent,
+            ),
+            leadingIcon = if (icon != null) {
+                {
+                    Icon(
+                        imageVector = icon,
+                        contentDescription = stringResource(id = label)
+                    )
+                }
+            } else {
+                null
+            },
+            supportingText = {
+                if (isError) {
+                    Text(
+                        modifier = modifier.fillMaxWidth(),
+                        text = stringResource(id = R.string.campo_obrigatorio),
+                        color = ErrorLight,
+                        textAlign = TextAlign.Start,
+                        style = MaterialTheme.typography.labelMedium
+                    )
+                }
             }
-        } else {
-            null
-        },
-        supportingText = {
-            if (isError) {
-                Text(
-                    modifier = modifier.fillMaxWidth(),
-                    text = stringResource(id = R.string.campo_obrigatorio),
-                    color = ErrorLight,
-                    textAlign = TextAlign.Start,
-                    style = MaterialTheme.typography.labelMedium
-                )
-            }
-        }
-    )
+        )
+
+    }
 }
 
 @Preview(showSystemUi = true)

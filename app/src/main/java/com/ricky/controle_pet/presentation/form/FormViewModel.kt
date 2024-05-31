@@ -1,5 +1,6 @@
 package com.ricky.controle_pet.presentation.form
 
+import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ricky.controle_pet.domain.model.Animal
@@ -12,17 +13,23 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import java.time.LocalDate
+import java.time.ZoneId
+import java.util.Calendar
+import java.util.Date
 import javax.inject.Inject
 
 @HiltViewModel
-class FormViewModel @Inject constructor(private val animalRepository: AnimalRepository) :
+class FormViewModel @Inject constructor(
+    context: Context,
+    private val animalRepository: AnimalRepository
+) :
     ViewModel() {
     private val _state = MutableStateFlow(FormState())
     val state = _state.asStateFlow()
 
     fun onEvent(event: FormEvent) {
         when (event) {
-            FormEvent.AddPet -> {
+            is FormEvent.AddPet -> {
                 if (_state.value.nome.trim().isBlank()) {
                     _state.value = _state.value.copy(
                         onErrorNome = true
@@ -65,7 +72,7 @@ class FormViewModel @Inject constructor(private val animalRepository: AnimalRepo
                     sexo = _state.value.sexo,
                     porte = _state.value.porte,
                     nascimento = _state.value.nascimento,
-                    foto = bitmapToByteArray(_state.value.foto!!),
+                    foto = bitmapToByteArray(_state.value.foto!!)
                 )
 
                 viewModelScope.launch {
@@ -112,7 +119,8 @@ class FormViewModel @Inject constructor(private val animalRepository: AnimalRepo
             is FormEvent.SelectPhoto -> {
                 event.uri?.let {
                     _state.value = _state.value.copy(
-                        foto = uriToBitmap(context = event.context, uri = event.uri),
+                        uri = event.uri,
+                        foto = uriToBitmap(uri = event.uri, context = event.context),
                         onErrorPhoto = false
                     )
                 } ?: run {
@@ -135,10 +143,20 @@ class FormViewModel @Inject constructor(private val animalRepository: AnimalRepo
             }
 
             is FormEvent.OnChangeDate -> {
+                val calendar = Calendar.getInstance()
+                calendar.time = Date(event.date)
+                calendar.add(Calendar.DAY_OF_YEAR, 1)
+
                 _state.value = _state.value.copy(
-                    nascimento = LocalDate.ofEpochDay(event.date),
+                    nascimento = calendar.toInstant().atZone(ZoneId.systemDefault()).toLocalDate(),
                     idade = calculateAgeAndMonths(LocalDate.ofEpochDay(event.date)),
                     onErrorNascimento = false
+                )
+            }
+
+            FormEvent.ShowBottomSheet -> {
+                _state.value = _state.value.copy(
+                    isShowBottomSheet = !_state.value.isShowBottomSheet
                 )
             }
         }

@@ -8,8 +8,11 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
@@ -18,7 +21,8 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AddAPhoto
 import androidx.compose.material.icons.filled.ArrowBackIosNew
-import androidx.compose.material.icons.filled.KeyboardArrowLeft
+import androidx.compose.material.icons.filled.CameraAlt
+import androidx.compose.material.icons.filled.Image
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -27,8 +31,10 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -56,11 +62,21 @@ fun FormScreen(
     onEvent: (FormEvent) -> Unit
 ) {
     val context = LocalContext.current
+    val sheetState = rememberModalBottomSheetState()
     val photoPicker =
         rememberLauncherForActivityResult(contract = ActivityResultContracts.PickVisualMedia(),
             onResult = {
                 onEvent(FormEvent.SelectPhoto(it, context))
             })
+
+    val cameraPermissionLauncher =
+        rememberLauncherForActivityResult(contract = ActivityResultContracts.RequestPermission()) { isGranted: Boolean ->
+            if (isGranted) {
+
+            } else {
+
+            }
+        }
 
     if (state.onErrorPhoto) {
         Toast.makeText(context, "Escolha uma foto", Toast.LENGTH_SHORT).show()
@@ -105,11 +121,7 @@ fun FormScreen(
                     .size(200.dp)
                     .padding(bottom = 16.dp)
                     .clickable {
-                        photoPicker.launch(
-                            PickVisualMediaRequest(
-                                ActivityResultContracts.PickVisualMedia.ImageOnly
-                            )
-                        )
+                        onEvent(FormEvent.ShowBottomSheet)
                     },
                 shape = RoundedCornerShape(10.dp),
                 elevation = CardDefaults.elevatedCardElevation(10.dp)
@@ -139,14 +151,16 @@ fun FormScreen(
                 onEvent(FormEvent.OnChangeNome(it))
             }
             DropdownCompose(
-                label = state.especie.value,
+                label = R.string.especie,
+                value = state.especie.value,
                 list = EspecieEnum.entries.toTypedArray()
             ) {
                 onEvent(FormEvent.OnChangeEspecie(it))
             }
 
             DropdownCompose(
-                label = state.sexo.value,
+                label = R.string.sexo,
+                value = state.sexo.value,
                 list = SexoEnum.entries.toTypedArray()
             ) {
                 onEvent(FormEvent.OnChangeSexo(it))
@@ -167,7 +181,8 @@ fun FormScreen(
                 onEvent(FormEvent.OnChangeRaca(it))
             }
             DropdownCompose(
-                label = state.porte.value,
+                label = R.string.tamanho,
+                value = state.porte.value,
                 list = PorteEnum.entries.toTypedArray()
             ) {
                 onEvent(FormEvent.OnChangePorte(it))
@@ -204,12 +219,68 @@ fun FormScreen(
                     )
                     .fillMaxWidth(),
                 shape = RoundedCornerShape(10.dp),
-                onClick = { onEvent(FormEvent.AddPet) }) {
+                onClick = { onEvent(FormEvent.AddPet(context)) }) {
                 Text(
                     text = stringResource(id = R.string.salvar_animal),
                     style = MaterialTheme.typography.headlineSmall.copy(fontWeight = FontWeight.Bold),
                     modifier = Modifier.padding(16.dp)
                 )
+            }
+        }
+        if (state.isShowBottomSheet) {
+            ModalBottomSheet(
+                onDismissRequest = { onEvent(FormEvent.ShowBottomSheet) },
+                sheetState = sheetState
+            ) {
+                Column(
+                    modifier = Modifier.padding(24.dp),
+                    verticalArrangement = Arrangement.Top
+                ) {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .clickable {
+
+                            },
+                        horizontalArrangement = Arrangement.spacedBy(6.dp)
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.CameraAlt,
+                            contentDescription = null
+                        )
+                        Text(
+                            modifier = Modifier.padding(vertical = 4.dp),
+                            text = stringResource(id = R.string.camera),
+                            style = MaterialTheme.typography.titleMedium
+                        )
+                    }
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(vertical = 16.dp)
+                            .clickable {
+                                photoPicker.launch(
+                                    PickVisualMediaRequest(
+                                        ActivityResultContracts.PickVisualMedia.ImageOnly
+                                    )
+                                )
+                            },
+                        horizontalArrangement = Arrangement.spacedBy(6.dp)
+                    ) {
+                        Icon(
+                            modifier = Modifier.padding(vertical = 4.dp),
+                            imageVector = Icons.Default.Image,
+                            contentDescription = null
+                        )
+                        Text(
+                            modifier = Modifier.padding(vertical = 4.dp),
+                            text = stringResource(id = R.string.galeria),
+                            style = MaterialTheme.typography.titleMedium
+                        )
+                    }
+                    Spacer(modifier = Modifier.height(32.dp))
+                }
+
             }
         }
     }

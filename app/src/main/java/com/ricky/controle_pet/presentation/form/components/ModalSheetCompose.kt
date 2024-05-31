@@ -109,7 +109,7 @@ fun ModalBottomSheetContent(
                     }
                 )
             }
-            Spacer(modifier = Modifier.height(38.dp))
+            Spacer(modifier = Modifier.height(46.dp))
         }
     }
 }

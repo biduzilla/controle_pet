@@ -1,7 +1,6 @@
 package com.ricky.controle_pet.domain.repository
 
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flowOf
 
 interface BaseRepository<T> {
     fun getAll(): Flow<List<T>>

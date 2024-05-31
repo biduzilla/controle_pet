@@ -4,7 +4,6 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
-import android.os.Environment
 import androidx.core.content.FileProvider
 import java.io.ByteArrayOutputStream
 import java.io.File
@@ -16,12 +15,44 @@ import java.util.Locale
 
 fun bitmapToByteArray(
     bitmap: Bitmap,
-    format: Bitmap.CompressFormat = Bitmap.CompressFormat.PNG,
-    quality: Int = 100
+    format: Bitmap.CompressFormat = Bitmap.CompressFormat.JPEG,
+    maxFileSizeInBytes: Int = 2 * 1024 * 1024,
+    maxWidth: Int = 800,
+    maxHeight: Int = 800
 ): ByteArray {
-    val stream = ByteArrayOutputStream()
-    bitmap.compress(format, quality, stream)
-    return stream.toByteArray()
+    val resizedBitmap = resizeBitmap(bitmap, maxWidth, maxHeight)
+
+    var quality = 100
+    var byteArray: ByteArray
+
+    do {
+        val stream = ByteArrayOutputStream()
+        resizedBitmap.compress(format, quality, stream)
+        byteArray = stream.toByteArray()
+        quality -= 5  // Reduz a qualidade em passos de 5
+    } while (byteArray.size > maxFileSizeInBytes && quality > 0)
+
+    return byteArray
+}
+
+fun resizeBitmap(bitmap: Bitmap, maxWidth: Int, maxHeight: Int): Bitmap {
+    val width = bitmap.width
+    val height = bitmap.height
+    val aspectRatio = width.toFloat() / height.toFloat()
+
+    var newWidth = maxWidth
+    var newHeight = maxHeight
+
+    if (width > height) {
+        newHeight = (newWidth / aspectRatio).toInt()
+    } else if (height > width) {
+        newWidth = (newHeight * aspectRatio).toInt()
+    } else {
+        newWidth = maxWidth
+        newHeight = maxHeight
+    }
+
+    return Bitmap.createScaledBitmap(bitmap, newWidth, newHeight, true)
 }
 
 fun Context.getTempUri(): Uri? {

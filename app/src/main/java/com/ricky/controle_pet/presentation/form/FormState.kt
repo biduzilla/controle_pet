@@ -1,7 +1,6 @@
 package com.ricky.controle_pet.presentation.form
 
 import android.graphics.Bitmap
-import android.net.Uri
 import com.ricky.controle_pet.domain.enums.EspecieEnum
 import com.ricky.controle_pet.domain.enums.PorteEnum
 import com.ricky.controle_pet.domain.enums.SexoEnum

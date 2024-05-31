@@ -141,12 +141,14 @@ class FormViewModel @Inject constructor(
 
             is FormEvent.OnChangeDate -> {
                 val calendar = Calendar.getInstance()
-                calendar.time = Date(event.date)
+                calendar.timeInMillis = event.date
                 calendar.add(Calendar.DAY_OF_YEAR, 1)
 
+                val localDate = calendar.toInstant().atZone(ZoneId.systemDefault()).toLocalDate()
+
                 _state.value = _state.value.copy(
-                    nascimento = calendar.toInstant().atZone(ZoneId.systemDefault()).toLocalDate(),
-                    idade = calculateAgeAndMonths(LocalDate.ofEpochDay(event.date)),
+                    nascimento = localDate,
+                    idade = calculateAgeAndMonths(localDate),
                     onErrorNascimento = false
                 )
             }

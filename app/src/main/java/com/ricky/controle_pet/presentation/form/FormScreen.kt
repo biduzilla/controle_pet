@@ -12,7 +12,6 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
@@ -39,6 +38,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -64,7 +64,7 @@ fun FormScreen(
 ) {
     val context = LocalContext.current
     val tempUri = remember { mutableStateOf<Uri?>(null) }
-
+    val focusManager = LocalFocusManager.current
     val photoPicker =
         rememberLauncherForActivityResult(contract = ActivityResultContracts.PickVisualMedia(),
             onResult = {
@@ -129,7 +129,7 @@ fun FormScreen(
                 .padding(24.dp)
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState()),
-            verticalArrangement = Arrangement.spacedBy(16.dp),
+            verticalArrangement = Arrangement.spacedBy(20.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Card(
@@ -137,6 +137,7 @@ fun FormScreen(
                     .size(200.dp)
                     .padding(bottom = 16.dp)
                     .clickable {
+                        focusManager.clearFocus()
                         onEvent(FormEvent.ShowBottomSheet)
                     },
                 shape = RoundedCornerShape(10.dp),
@@ -205,6 +206,7 @@ fun FormScreen(
             }
 
             Card(
+                modifier = Modifier.padding(top = 10.dp),
                 shape = RoundedCornerShape(10.dp),
                 elevation = CardDefaults.cardElevation(10.dp),
                 onClick = {
@@ -230,11 +232,10 @@ fun FormScreen(
             Button(
                 modifier = Modifier
                     .padding(
-                        vertical = 4.dp,
-                        horizontal = 8.dp
-                    )
-                    .fillMaxWidth(),
-                shape = RoundedCornerShape(10.dp),
+                        vertical = 16.dp,
+                        horizontal = 10.dp
+                    ),
+                shape = RoundedCornerShape(20.dp),
                 onClick = { onEvent(FormEvent.AddPet(context)) }) {
                 Text(
                     text = stringResource(id = R.string.salvar_animal),
@@ -247,6 +248,7 @@ fun FormScreen(
             ModalBottomSheetCompose(
                 onDismiss = { onEvent(FormEvent.ShowBottomSheet) },
                 onTakePhotoClick = {
+                    focusManager.clearFocus()
                     onEvent(FormEvent.ShowBottomSheet)
                     val permission = Manifest.permission.CAMERA
                     if (ContextCompat.checkSelfPermission(
@@ -263,6 +265,7 @@ fun FormScreen(
                     }
                 },
                 onPhotoGalleryClick = {
+                    focusManager.clearFocus()
                     onEvent(FormEvent.ShowBottomSheet)
                     photoPicker.launch(
                         PickVisualMediaRequest(

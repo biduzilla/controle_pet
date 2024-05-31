@@ -9,7 +9,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
@@ -41,7 +40,7 @@ fun TextFieldCompose(
 ) {
     Column(
         modifier = modifier,
-        verticalArrangement = Arrangement.spacedBy(10.dp)
+        verticalArrangement = Arrangement.spacedBy(6.dp)
     ) {
         Text(
             text = stringResource(id = label),
@@ -79,19 +78,18 @@ fun TextFieldCompose(
             } else {
                 null
             },
-            supportingText = {
-                if (isError) {
-                    Text(
-                        modifier = modifier.fillMaxWidth(),
-                        text = stringResource(id = R.string.campo_obrigatorio),
-                        color = ErrorLight,
-                        textAlign = TextAlign.Start,
-                        style = MaterialTheme.typography.labelMedium
-                    )
-                }
-            }
         )
-
+        if (isError) {
+            Text(
+                modifier = modifier
+                    .fillMaxWidth()
+                    .padding(start = 8.dp),
+                text = stringResource(id = R.string.campo_obrigatorio),
+                color = ErrorLight,
+                textAlign = TextAlign.Start,
+                style = MaterialTheme.typography.labelMedium
+            )
+        }
     }
 }
 

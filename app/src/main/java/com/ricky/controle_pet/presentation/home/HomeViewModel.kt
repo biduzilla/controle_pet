@@ -37,4 +37,6 @@ class HomeViewModel @Inject constructor(
             }
         }
     }
+
+    fun onEvent(event: HomeEvent){}
 }

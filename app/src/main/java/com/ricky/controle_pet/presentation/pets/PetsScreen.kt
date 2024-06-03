@@ -55,7 +55,7 @@ fun PetsScreen(state: PetsState, navController: NavController) {
         LazyColumn(Modifier.padding(paddingValues)) {
             items(state.animais) { animal ->
                 PetInfoItem(animal = animal) {
-
+                    navController.navigate(Screens.HomeScreen.route + "/${animal.id}")
                 }
             }
         }

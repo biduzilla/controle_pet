@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBackIosNew
 import androidx.compose.material.icons.filled.DarkMode
@@ -24,6 +25,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
@@ -42,7 +44,10 @@ fun TopBarPet(
     onClick: () -> Unit,
     onChangeTheme: (Boolean) -> Unit
 ) {
-    Surface(modifier = modifier) {
+    Surface(
+        modifier = modifier,
+        shape = RoundedCornerShape(bottomStart = 50.dp, bottomEnd = 50.dp),
+    ) {
         Column(
             modifier = Modifier.fillMaxWidth(),
             verticalArrangement = Arrangement.Top
@@ -58,7 +63,6 @@ fun TopBarPet(
                     Icon(
                         imageVector = Icons.Default.ArrowBackIosNew,
                         contentDescription = null,
-                        modifier = Modifier.size(30.dp)
                     )
                 }
                 Text(
@@ -98,12 +102,14 @@ fun TopBarPet(
                     modifier = Modifier
                         .size(100.dp)
                         .clickable { onClick.invoke() }) {
-                    Image(
-                        bitmap = byteArrayToBitmap(animal.foto!!).asImageBitmap(),
-                        contentDescription = animal.nome,
-                        contentScale = ContentScale.Crop,
-                        modifier = Modifier.fillMaxSize()
-                    )
+                    animal.foto?.let {
+                        Image(
+                            bitmap = byteArrayToBitmap(it).asImageBitmap(),
+                            contentDescription = animal.nome,
+                            contentScale = ContentScale.Crop,
+                            modifier = Modifier.fillMaxSize()
+                        )
+                    }
                 }
                 Column(Modifier.padding(16.dp)) {
                     Text(

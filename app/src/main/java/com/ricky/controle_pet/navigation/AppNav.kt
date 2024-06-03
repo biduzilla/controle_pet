@@ -14,10 +14,13 @@ import com.google.accompanist.navigation.animation.composable
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.ricky.controle_pet.presentation.form.FormScreen
 import com.ricky.controle_pet.presentation.form.FormViewModel
+import com.ricky.controle_pet.presentation.home.HomeScreen
+import com.ricky.controle_pet.presentation.home.HomeViewModel
 import com.ricky.controle_pet.presentation.pets.PetsScreen
 import com.ricky.controle_pet.presentation.pets.PetsViewModel
 import com.ricky.controle_pet.presentation.splash.SplashScreen
 import com.ricky.controle_pet.presentation.splash.SplashViewModel
+import com.ricky.controle_pet.utils.Constants
 
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
@@ -38,6 +41,15 @@ fun AppNav() {
 
             PetsScreen(state = state, navController = navController)
         }
+
+        composableSlideHorizontally(Screens.HomeScreen.route + "/{${Constants.PARAM_PET_ID}}") {
+            val viewmodel = hiltViewModel<HomeViewModel>()
+            val state by viewmodel.state.collectAsState()
+
+            HomeScreen(state = state, navController = navController, viewmodel::onEvent)
+        }
+
+
 
         composableSlideHorizontally(Screens.FormScreen.route) {
             val viewModel = hiltViewModel<FormViewModel>()

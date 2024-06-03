@@ -3,6 +3,7 @@ package com.ricky.controle_pet.presentation.pets.components
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -139,6 +140,7 @@ fun PetInfoItem(
 
 @Composable
 fun SexoTag(sexo: SexoEnum, modifier: Modifier = Modifier) {
+    val isDark = isSystemInDarkTheme()
     val color = if (sexo == SexoEnum.MACHO) Color.Blue else Color.Red
 
     Box(

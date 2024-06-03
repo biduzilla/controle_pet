@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -43,7 +44,7 @@ fun PetsScreen(state: PetsState, navController: NavController) {
                 )
             })
     }, floatingActionButton = {
-        FloatingActionButton(
+        FloatingActionButton(shape = CircleShape,
             modifier = Modifier
                 .size(112.dp)
                 .padding(16.dp),

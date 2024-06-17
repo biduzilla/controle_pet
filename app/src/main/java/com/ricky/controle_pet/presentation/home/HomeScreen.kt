@@ -28,8 +28,10 @@ fun HomeScreen(
             label = state.tela,
             isDark = state.isDark,
             onVoltar = { navController.popBackStack() },
-            onClick = { },
-            onChangeTheme = {})
+            onClick = {
+//                navController.navigate(Screens.ConfigScreen.route)
+            },
+            onChangeTheme = { onEvent(HomeEvent.OnChangeTheme(it)) })
     },
         bottomBar = {
             BottomBar(

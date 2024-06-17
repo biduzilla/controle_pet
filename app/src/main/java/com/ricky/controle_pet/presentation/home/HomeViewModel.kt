@@ -26,6 +26,14 @@ class HomeViewModel @Inject constructor(
         savedStateHandle.get<String>(Constants.PARAM_PET_ID)?.let {
             getAnimal(it)
         }
+
+        viewModelScope.launch {
+            dataStoreUtil.getTheme().collect { isDark ->
+                _state.value = _state.value.copy(
+                    isDark = isDark
+                )
+            }
+        }
     }
 
     private fun getAnimal(id: String) {
@@ -38,5 +46,13 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun onEvent(event: HomeEvent){}
+    fun onEvent(event: HomeEvent) {
+        when (event) {
+            is HomeEvent.OnChangeTheme -> {
+                viewModelScope.launch {
+                    dataStoreUtil.saveTheme(event.isDark)
+                }
+            }
+        }
+    }
 }

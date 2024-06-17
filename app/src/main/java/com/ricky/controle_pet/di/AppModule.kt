@@ -7,15 +7,12 @@ import com.ricky.controle_pet.data.DataStoreUtil
 import com.ricky.controle_pet.data.dao.AnimalDao
 import com.ricky.controle_pet.data.dao.VacinaDao
 import com.ricky.controle_pet.data.dao.VermifugacaoDao
-import com.ricky.controle_pet.data.dao.VetDao
 import com.ricky.controle_pet.data.repository.AnimalRepositoryImpl
 import com.ricky.controle_pet.data.repository.VacinaRepositoryImpl
 import com.ricky.controle_pet.data.repository.VermifugacaoRepositoryImpl
-import com.ricky.controle_pet.data.repository.VetRepositoryImpl
 import com.ricky.controle_pet.domain.repository.AnimalRepository
 import com.ricky.controle_pet.domain.repository.VacinaRepository
 import com.ricky.controle_pet.domain.repository.VermifugacaoRepository
-import com.ricky.controle_pet.domain.repository.VetRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

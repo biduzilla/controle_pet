@@ -16,10 +16,10 @@ class VermifugacaoRepositoryImpl @Inject constructor(private val vermifugacaoDao
     override suspend fun update(entity: Vermifugacao) = vermifugacaoDao.update(entity)
 
     override suspend fun delete(entity: Vermifugacao) {
-        TODO("Not yet implemented")
+        vermifugacaoDao.delete(entity)
     }
 
     override suspend fun deleteById(id: String) {
-        TODO("Not yet implemented")
+        vermifugacaoDao.deleteById(id)
     }
 }

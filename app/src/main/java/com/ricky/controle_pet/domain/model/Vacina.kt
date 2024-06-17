@@ -11,6 +11,5 @@ data class Vacina(
     var id:String = UUID.randomUUID().toString(),
     var data:LocalDate = LocalDate.now(),
     var nome:String = "",
-    var vetId:String = "",
     var reforco:LocalDate = LocalDate.now()
 )

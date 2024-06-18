@@ -49,4 +49,52 @@ class VacinaViewModel @Inject constructor(
             }
         }
     }
+
+    fun onEvent(event: VacinaEvent) {
+        when (event) {
+            is VacinaEvent.IsSelectProxVacina -> {
+
+            }
+
+            is VacinaEvent.OnChangeData -> {
+
+            }
+
+            is VacinaEvent.OnChangeDescricao -> {
+
+            }
+
+            is VacinaEvent.OnChangeNome -> {
+
+            }
+
+            is VacinaEvent.OnChangeProxData -> {
+
+            }
+
+            is VacinaEvent.OnDeleteVacina -> {
+
+            }
+
+            VacinaEvent.OnDismissDialogData -> {
+
+            }
+
+            VacinaEvent.OnDismissDialogForm -> {
+
+            }
+
+            VacinaEvent.OnSave -> {
+
+            }
+
+            VacinaEvent.OnShowDialogData -> {
+
+            }
+
+            VacinaEvent.OnShowDialogForm -> {
+
+            }
+        }
+    }
 }

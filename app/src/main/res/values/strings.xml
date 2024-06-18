@@ -15,5 +15,10 @@
     <string name="especie">Espécie</string>
     <string name="tamanho">Tamanho</string>
     <string name="cancelar">Cancelar</string>
+    <string name="add_vacina">Adicionar Vacina</string>
+    <string name="nome_vacina">Vacina</string>
+    <string name="salvar">Salvar</string>
+    <string name="data_aplicacao">Quando foi aplicado?</string>
+    <string name="prox_aplicacao">Qual será a próxima aplicação?</string>
     <string name="fileprovider">com.ricky.controle_pet.components.fileprovider</string>
 </resources>

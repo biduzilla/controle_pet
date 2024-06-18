@@ -127,7 +127,7 @@ fun DialogForm(
                 Button(
                     onClick = {
                         keyBoardManager.clearFocus()
-                        if (state.onErrorData) {
+                        if (state.onErrorData || state.onErrorReforco) {
                             Toast.makeText(
                                 context,
                                 "Escolha uma data",

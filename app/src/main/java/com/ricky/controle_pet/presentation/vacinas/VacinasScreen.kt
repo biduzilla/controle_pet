@@ -12,6 +12,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.ricky.controle_pet.presentation.vacinas.components.DialogForm
 
 @Composable
 fun VacinasScreen(
@@ -27,6 +28,18 @@ fun VacinasScreen(
             Icon(Icons.Default.Vaccines, null)
         }
     }) { paddingValues ->
+        if (state.isShowDialogForm) {
+            DialogForm(
+                state = state,
+                onChangeNome = { onEvent(VacinaEvent.OnChangeNome(it)) },
+                onDismiss = { onEvent(VacinaEvent.OnDismissDialogForm) },
+                onData = { onEvent(VacinaEvent.OnChangeData(it)) },
+                onReforco = { onEvent(VacinaEvent.OnChangeProxData(it)) },
+                isReforco = { onEvent(VacinaEvent.IsSelectProxVacina(it)) },
+                onSave = { onEvent(VacinaEvent.OnSave) }
+            )
+        }
+
         LazyColumn(Modifier.padding(paddingValues)) {
 
         }

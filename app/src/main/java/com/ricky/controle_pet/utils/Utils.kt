@@ -10,6 +10,7 @@ import java.io.File
 import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.Period
+import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
 import java.util.Locale
 
@@ -107,4 +108,9 @@ fun calculateAgeAndMonths(birthDate: LocalDate): String {
         years == 0 -> "$months meses e $days dias"
         else -> "$years anos e $months meses"
     }
+}
+
+fun LocalDate.dataParaLongEspeficica(dia: Int, hora: Int): Long {
+    val localDate = this.atTime(hora, 0).plusDays(dia.toLong())
+    return localDate.toInstant(ZoneOffset.UTC).toEpochMilli()
 }

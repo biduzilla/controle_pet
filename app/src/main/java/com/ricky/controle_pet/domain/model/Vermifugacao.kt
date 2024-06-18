@@ -12,5 +12,7 @@ data class Vermifugacao(
     var id: String = UUID.randomUUID().toString(),
     var nome: String = "",
     var peso: BigDecimal = BigDecimal.ZERO,
-    var reforco: LocalDate = LocalDate.now()
+    var data: LocalDate = LocalDate.now(),
+    var reforco: LocalDate = LocalDate.now(),
+    var animalId: String
 )

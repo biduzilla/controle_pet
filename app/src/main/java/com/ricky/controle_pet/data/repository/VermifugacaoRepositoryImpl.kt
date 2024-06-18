@@ -4,11 +4,20 @@ import com.ricky.controle_pet.data.dao.VermifugacaoDao
 import com.ricky.controle_pet.domain.model.Vermifugacao
 import com.ricky.controle_pet.domain.repository.VermifugacaoRepository
 import kotlinx.coroutines.flow.Flow
+import java.time.LocalDate
 import javax.inject.Inject
 
 class VermifugacaoRepositoryImpl @Inject constructor(private val vermifugacaoDao: VermifugacaoDao) :
     VermifugacaoRepository {
-    override fun getAll(): Flow<List<Vermifugacao>>  = vermifugacaoDao.getAllVermifugacao()
+    override fun getByAnimalIdOrderByData(id: String): Flow<List<Vermifugacao>> =
+        vermifugacaoDao.getByAnimalIdOrderByData(id)
+
+    override fun getByAnimalIdWithReforcoAfter(
+        id: String,
+        currentDate: LocalDate
+    ): Flow<List<Vermifugacao>> = vermifugacaoDao.getByAnimalIdWithReforcoAfter(id, currentDate)
+
+    override fun getAll(): Flow<List<Vermifugacao>> = vermifugacaoDao.getAllVermifugacao()
 
     override suspend fun getById(id: String): Vermifugacao? = vermifugacaoDao.getById(id)
 

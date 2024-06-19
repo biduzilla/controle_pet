@@ -1,14 +1,17 @@
-package com.ricky.controle_pet.presentation.vacinas
+package com.ricky.controle_pet.presentation.vermifugacao
 
 import com.ricky.controle_pet.domain.model.Vacina
+import com.ricky.controle_pet.domain.model.Vermifugacao
+import java.math.BigDecimal
 import java.time.LocalDate
 
-data class VacinaState(
-    var vacinaNaoAplicadas: List<Vacina> = emptyList(),
-    var vacinas: List<Vacina> = emptyList(),
+data class VermiState(
+    var vermNaoAplicadas: List<Vermifugacao> = emptyList(),
+    var verm: List<Vermifugacao> = emptyList(),
     var isShowDialogForm: Boolean = false,
     var isReforco: Boolean = false,
     var nome: String = "",
+    var peso: BigDecimal = BigDecimal.ZERO,
     var data: LocalDate = LocalDate.now(),
     var dataString: String = "",
     var reforco: LocalDate = LocalDate.now(),
@@ -16,4 +19,5 @@ data class VacinaState(
     var onErrorNome: Boolean = false,
     var onErrorData: Boolean = false,
     var onErrorReforco: Boolean = false,
+    var onErrorPeso: Boolean = false,
 )

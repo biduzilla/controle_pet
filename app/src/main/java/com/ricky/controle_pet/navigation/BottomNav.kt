@@ -1,7 +1,6 @@
 package com.ricky.controle_pet.navigation
 
 
-import android.os.Bundle
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue

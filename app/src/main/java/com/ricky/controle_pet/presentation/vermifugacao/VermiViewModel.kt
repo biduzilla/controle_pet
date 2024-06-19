@@ -1,13 +1,13 @@
-package com.ricky.controle_pet.presentation.vacinas
+package com.ricky.controle_pet.presentation.vermifugacao
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ricky.controle_pet.domain.model.Animal
 import com.ricky.controle_pet.domain.model.NotificacaoInfo
-import com.ricky.controle_pet.domain.model.Vacina
+import com.ricky.controle_pet.domain.model.Vermifugacao
 import com.ricky.controle_pet.domain.repository.AnimalRepository
-import com.ricky.controle_pet.domain.repository.VacinaRepository
+import com.ricky.controle_pet.domain.repository.VermifugacaoRepository
 import com.ricky.controle_pet.utils.Constants
 import com.ricky.controle_pet.utils.dataParaLongEspeficica
 import com.ricky.controle_pet.utils.formatterLocalDate
@@ -22,13 +22,13 @@ import java.util.Calendar
 import javax.inject.Inject
 
 @HiltViewModel
-class VacinaViewModel @Inject constructor(
+class VermiViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val notificationService: NotificationService,
-    private val vacinaRepository: VacinaRepository,
+    private val vermifugacaoRepository: VermifugacaoRepository,
     private val animalRepository: AnimalRepository
 ) : ViewModel() {
-    private val _state = MutableStateFlow(VacinaState())
+    private val _state = MutableStateFlow(VermiState())
     val state = _state.asStateFlow()
     private lateinit var petId: String
     private lateinit var pet: Animal
@@ -36,24 +36,24 @@ class VacinaViewModel @Inject constructor(
     init {
         savedStateHandle.get<String>(Constants.PARAM_PET_ID)?.let { petId ->
             this.petId = petId
-            getVacinas(petId)
+            getVermi(petId)
             getAnimal(petId)
         }
     }
 
-    private fun getVacinas(petId: String) {
+    private fun getVermi(petId: String) {
         viewModelScope.launch {
-            vacinaRepository.getByAnimalIdOrderByData(petId).collect { vacinas ->
+            vermifugacaoRepository.getByAnimalIdOrderByData(petId).collect { data ->
                 _state.value = _state.value.copy(
-                    vacinas = vacinas
+                    verm = data
                 )
             }
         }
 
         viewModelScope.launch {
-            vacinaRepository.getByAnimalIdWithReforcoAfter(petId).collect { vacinas ->
+            vermifugacaoRepository.getByAnimalIdWithReforcoAfter(petId).collect { data ->
                 _state.value = _state.value.copy(
-                    vacinaNaoAplicadas = vacinas
+                    vermNaoAplicadas = data
                 )
             }
         }
@@ -67,15 +67,14 @@ class VacinaViewModel @Inject constructor(
         }
     }
 
-    fun onEvent(event: VacinaEvent) {
+    fun onEvent(event: VermiEvent) {
         when (event) {
-            is VacinaEvent.IsSelectProxVacina -> {
+            is VermiEvent.IsSelectReforco -> {
                 _state.value = _state.value.copy(
                     isReforco = event.isProximaVacina
                 )
             }
-
-            is VacinaEvent.OnChangeData -> {
+            is VermiEvent.OnChangeData -> {
                 val calendar = Calendar.getInstance()
                 calendar.timeInMillis = event.data
                 calendar.add(Calendar.DAY_OF_YEAR, 1)
@@ -89,16 +88,21 @@ class VacinaViewModel @Inject constructor(
                 )
             }
 
-            is VacinaEvent.OnChangeNome -> {
+            is VermiEvent.OnChangeNome -> {
                 _state.value = _state.value.copy(
                     nome = event.nome,
                     onErrorNome = event.nome.trim().isBlank()
                 )
             }
-
-            is VacinaEvent.OnChangeProxData -> {
+            is VermiEvent.OnChangePeso -> {
+                _state.value = _state.value.copy(
+                    peso = event.peso,
+                    onErrorNome = false
+                )
+            }
+            is VermiEvent.OnChangeReforco -> {
                 val calendar = Calendar.getInstance()
-                calendar.timeInMillis = event.proxData
+                calendar.timeInMillis = event.reforco
                 calendar.add(Calendar.DAY_OF_YEAR, 1)
 
                 val localDate = calendar.toInstant().atZone(ZoneId.systemDefault()).toLocalDate()
@@ -109,41 +113,35 @@ class VacinaViewModel @Inject constructor(
                     onErrorReforco = false
                 )
             }
-
-            is VacinaEvent.OnDeleteVacina -> {
+            is VermiEvent.OnDelete -> {
                 viewModelScope.launch {
-                    vacinaRepository.deleteById(event.id)
+                    vermifugacaoRepository.deleteById(event.id)
                 }
             }
-
-
-            VacinaEvent.OnDismissDialogForm -> {
+            VermiEvent.OnDismissDialogForm -> {
                 _state.value = _state.value.copy(
                     isShowDialogForm = false,
                 )
             }
-
-            VacinaEvent.OnSave -> {
-                val vacina = Vacina(
+            VermiEvent.OnSave -> {
+                val verm = Vermifugacao(
                     data = _state.value.data,
                     nome = _state.value.nome,
                     reforco = _state.value.reforco,
+                    peso = _state.value.peso,
                     animalId = petId
                 )
 
-                agendarAlertaVacina(
-                    title = _state.value.nome,
+                agendarAlerta(
                     data = _state.value.reforco,
                     nome = pet.nome
                 )
                 viewModelScope.launch {
-                    vacinaRepository.insert(vacina)
-                    _state.value = VacinaState()
+                    vermifugacaoRepository.insert(verm)
+                    _state.value = VermiState()
                 }
             }
-
-
-            VacinaEvent.OnShowDialogForm -> {
+            VermiEvent.OnShowDialogForm -> {
                 _state.value = _state.value.copy(
                     isShowDialogForm = true,
                 )
@@ -151,14 +149,13 @@ class VacinaViewModel @Inject constructor(
         }
     }
 
-    private fun agendarAlertaVacina(
-        title: String,
+    private fun agendarAlerta(
         nome: String,
         data: LocalDate
     ) {
         val not = NotificacaoInfo(
-            "Revacinar - $title",
-            "Hoje está marcado a revacinação do(a) $nome da vacina $title",
+            "Vermifugação",
+            "Hoje está marcado a vermifugação do(a) $nome",
             0
         )
 

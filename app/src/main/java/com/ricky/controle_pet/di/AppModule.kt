@@ -13,6 +13,7 @@ import com.ricky.controle_pet.data.repository.VermifugacaoRepositoryImpl
 import com.ricky.controle_pet.domain.repository.AnimalRepository
 import com.ricky.controle_pet.domain.repository.VacinaRepository
 import com.ricky.controle_pet.domain.repository.VermifugacaoRepository
+import com.ricky.controle_pet.utils.notification.NotificationService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -23,6 +24,12 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object AppModule {
+
+    @Singleton
+    @Provides
+    fun provideNotificationService(@ApplicationContext context: Context): NotificationService {
+        return NotificationService(context)
+    }
     @Singleton
     @Provides
     fun provideAppDatabase(@ApplicationContext context: Context): AppDatabase {
@@ -45,10 +52,6 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun provideVetDao(database: AppDatabase): VetDao = database.vetDao()
-
-    @Singleton
-    @Provides
     fun provideVermifugacaoDao(database: AppDatabase): VermifugacaoDao = database.vermifugacaoDao()
 
     @Singleton
@@ -58,10 +61,6 @@ object AppModule {
     @Singleton
     @Provides
     fun provideVacinaRepository(dao: VacinaDao): VacinaRepository = VacinaRepositoryImpl(dao)
-
-    @Singleton
-    @Provides
-    fun provideVetRepository(dao: VetDao): VetRepository = VetRepositoryImpl(dao)
 
     @Singleton
     @Provides

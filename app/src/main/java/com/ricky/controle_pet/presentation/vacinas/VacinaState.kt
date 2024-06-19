@@ -9,7 +9,6 @@ data class VacinaState(
     var isShowDialogForm: Boolean = false,
     var isShowDialogeData: Boolean = false,
     var isReforco: Boolean = false,
-    val isProxVacina: Boolean = false,
     var nome: String = "",
     var data: LocalDate = LocalDate.now(),
     var dataString: String = "",

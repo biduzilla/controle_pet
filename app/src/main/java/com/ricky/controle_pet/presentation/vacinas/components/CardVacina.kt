@@ -3,7 +3,6 @@ package com.ricky.controle_pet.presentation.vacinas.components
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.spring
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -16,10 +15,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
-import androidx.compose.material.icons.filled.KeyboardArrowDown
-import androidx.compose.material.icons.filled.KeyboardArrowUp
-import androidx.compose.material.icons.filled.MedicalInformation
-import androidx.compose.material.icons.filled.Medication
 import androidx.compose.material.icons.filled.Vaccines
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -40,6 +35,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.ricky.controle_pet.domain.model.Vacina
+import com.ricky.controle_pet.utils.formatterLocalDate
 
 @Composable
 fun CardVacina(
@@ -124,11 +120,12 @@ fun CardVacina(
                     Spacer(modifier = Modifier.height(8.dp))
                     Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                         Text(
-                            text = "Vacinado em ${vacina.data}",
+                            text = "Vacinado em ${formatterLocalDate(vacina.data)
+                            }",
                             style = MaterialTheme.typography.bodyLarge
                         )
                         Text(
-                            text = "Revacinar em ${vacina.reforco}",
+                            text = "Revacinar em ${formatterLocalDate(vacina.reforco)}",
                             style = MaterialTheme.typography.bodyLarge
                         )
                     }

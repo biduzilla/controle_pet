@@ -29,7 +29,6 @@ fun HomeScreen(
             isDark = state.isDark,
             onVoltar = { navController.popBackStack() },
             onClick = {
-//                navController.navigate(Screens.ConfigScreen.route)
             },
             onChangeTheme = { onEvent(HomeEvent.OnChangeTheme(it)) })
     },

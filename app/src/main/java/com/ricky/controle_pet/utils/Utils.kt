@@ -89,7 +89,7 @@ fun byteArrayToBitmap(byteArray: ByteArray): Bitmap {
 
 fun formatterLocalDate(localDate: LocalDate): String {
     val formatter = DateTimeFormatter.ofPattern(
-        "dd/MMMM/yyyy",
+        "dd/MM/yyyy",
         Locale("pt", "BR")
     )
     return localDate.format(formatter)

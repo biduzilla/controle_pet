@@ -50,7 +50,7 @@ fun DialogForm(
     val keyBoardManager = LocalFocusManager.current
 
     if (isShowDataDialog) {
-        DateDialog(isPassado = state.isReforco,
+        DateDialog(isPassado = !state.isReforco,
             onDimiss = { isShowDataDialog = false }) { data ->
             if (state.isReforco) {
                 onReforco(data)

@@ -1,5 +1,6 @@
 package com.ricky.controle_pet.presentation.vacinas
 
+import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -23,7 +24,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class VacinaViewModel @Inject constructor(
-    savedStateHandle: SavedStateHandle,
+    private val savedStateHandle: SavedStateHandle,
     private val notificationService: NotificationService,
     private val vacinaRepository: VacinaRepository,
     private val animalRepository: AnimalRepository
@@ -36,8 +37,8 @@ class VacinaViewModel @Inject constructor(
     init {
         savedStateHandle.get<String>(Constants.PARAM_PET_ID)?.let { petId ->
             this.petId = petId
-
             getVacinas(petId)
+            getAnimal(petId)
         }
     }
 
@@ -71,7 +72,7 @@ class VacinaViewModel @Inject constructor(
         when (event) {
             is VacinaEvent.IsSelectProxVacina -> {
                 _state.value = _state.value.copy(
-                    isProxVacina = event.isProximaVacina
+                    isReforco = event.isProximaVacina
                 )
             }
 

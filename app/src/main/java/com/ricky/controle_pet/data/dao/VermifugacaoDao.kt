@@ -3,7 +3,6 @@ package com.ricky.controle_pet.data.dao
 import androidx.room.Dao
 import androidx.room.Query
 import androidx.room.Transaction
-import com.ricky.controle_pet.domain.model.Vacina
 import com.ricky.controle_pet.domain.model.Vermifugacao
 import kotlinx.coroutines.flow.Flow
 import java.time.LocalDate

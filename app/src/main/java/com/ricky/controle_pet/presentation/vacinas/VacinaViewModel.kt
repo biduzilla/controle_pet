@@ -29,7 +29,7 @@ class VacinaViewModel @Inject constructor(
     private val animalRepository: AnimalRepository
 ) : ViewModel() {
     private val _state = MutableStateFlow(VacinaState())
-    private val state = _state.asStateFlow()
+    val state = _state.asStateFlow()
     private lateinit var petId: String
     private lateinit var pet: Animal
 

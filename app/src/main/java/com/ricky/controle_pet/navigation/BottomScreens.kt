@@ -29,11 +29,4 @@ sealed class BottomScreens(
         selectedIcon = Icons.Filled.Medication,
         unselectedIcon = Icons.Outlined.Medication
     )
-
-    data object ConfigScreen : BottomScreens(
-        route = "config_screen",
-        label = "Configuração",
-        selectedIcon = Icons.Filled.Settings,
-        unselectedIcon = Icons.Outlined.Settings
-    )
 }

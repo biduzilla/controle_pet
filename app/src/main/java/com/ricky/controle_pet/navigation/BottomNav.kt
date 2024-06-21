@@ -12,6 +12,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.ricky.controle_pet.presentation.vacinas.VacinaViewModel
 import com.ricky.controle_pet.presentation.vacinas.VacinasScreen
+import com.ricky.controle_pet.presentation.vermifugacao.VermiViewModel
+import com.ricky.controle_pet.presentation.vermifugacao.VermifugacaoScreen
 import com.ricky.controle_pet.utils.Constants
 
 @Composable
@@ -19,10 +21,10 @@ fun BottomNav(navController: NavHostController, petId: String) {
 
     NavHost(
         navController = navController,
-        startDestination = BottomScreens.VacinasScreen.route+ "/${Constants.PARAM_PET_ID}"
+        startDestination = BottomScreens.VacinasScreen.route+ "/{${Constants.PARAM_PET_ID}}"
     ) {
         composable(
-            BottomScreens.VacinasScreen.route + "/${Constants.PARAM_PET_ID}",
+            BottomScreens.VacinasScreen.route + "/{${Constants.PARAM_PET_ID}}",
             arguments = listOf(navArgument(Constants.PARAM_PET_ID) {
                 type = NavType.StringType
                 defaultValue = petId
@@ -34,8 +36,11 @@ fun BottomNav(navController: NavHostController, petId: String) {
             VacinasScreen(state = state, onEvent = viewModel::onEvent)
         }
 
-        composable(BottomScreens.VermifugacaoScreen.route + "/${Constants.PARAM_PET_ID}") {
+        composable(BottomScreens.VermifugacaoScreen.route + "/{${Constants.PARAM_PET_ID}}") {
+            val viewModel = hiltViewModel<VermiViewModel>()
+            val state by viewModel.state.collectAsState()
 
+            VermifugacaoScreen(state = state, onEvent = viewModel::onEvent)
         }
     }
 

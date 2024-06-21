@@ -22,7 +22,7 @@ sealed class BottomScreens(
     )
 
     data object VermifugacaoScreen : BottomScreens(
-        route = "verfifugacao_screen",
+        route = "vermifugacao_screen",
         label = "Vermifugações",
         selectedIcon = Icons.Filled.Medication,
         unselectedIcon = Icons.Outlined.Medication

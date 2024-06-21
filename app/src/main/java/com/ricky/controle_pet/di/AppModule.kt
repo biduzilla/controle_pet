@@ -30,6 +30,7 @@ object AppModule {
     fun provideNotificationService(@ApplicationContext context: Context): NotificationService {
         return NotificationService(context)
     }
+
     @Singleton
     @Provides
     fun provideAppDatabase(@ApplicationContext context: Context): AppDatabase {
@@ -69,5 +70,9 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun provideAnimalRepository(dao: AnimalDao): AnimalRepository = AnimalRepositoryImpl(dao)
+    fun provideAnimalRepository(
+        dao: AnimalDao,
+        vacinaRepository: VacinaRepository,
+        vermifugacaoRepository: VermifugacaoRepository
+    ): AnimalRepository = AnimalRepositoryImpl(dao, vermifugacaoRepository, vacinaRepository)
 }

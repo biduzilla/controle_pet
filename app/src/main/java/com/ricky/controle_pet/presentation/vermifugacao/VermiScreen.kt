@@ -8,7 +8,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Vaccines
+import androidx.compose.material.icons.filled.Medication
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -35,7 +35,7 @@ fun VermifugacaoScreen(
                 .size(112.dp)
                 .padding(16.dp),
             onClick = { onEvent(VermiEvent.OnShowDialogForm) }) {
-            Icon(Icons.Default.Vaccines, null)
+            Icon(Icons.Default.Medication, null)
         }
     }) { paddingValues ->
         if (state.isShowDialogForm) {
@@ -58,7 +58,7 @@ fun VermifugacaoScreen(
         ) {
             item {
                 Text(
-                    text = stringResource(id = R.string.prox_vacina),
+                    text = stringResource(id = R.string.prox_verm),
                     style = MaterialTheme.typography.headlineLarge,
                 )
                 Spacer(modifier = Modifier.height(8.dp))
@@ -71,7 +71,7 @@ fun VermifugacaoScreen(
             item {
                 Spacer(modifier = Modifier.height(16.dp))
                 Text(
-                    text = stringResource(id = R.string.vacina_aplicada),
+                    text = stringResource(id = R.string.verm_aplicada),
                     style = MaterialTheme.typography.headlineLarge,
                 )
                 Spacer(modifier = Modifier.height(8.dp))

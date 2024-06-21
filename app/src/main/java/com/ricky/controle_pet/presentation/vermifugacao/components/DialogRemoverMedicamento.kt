@@ -27,7 +27,7 @@ fun DialogRemoverMedicamento(
         shape = RoundedCornerShape(20.dp),
         text = {
             Text(
-                text = stringResource(id = R.string.titulo_apagar_vacina),
+                text = stringResource(id = R.string.titulo_apagar),
                 style = MaterialTheme.typography.bodyLarge
             )
         },

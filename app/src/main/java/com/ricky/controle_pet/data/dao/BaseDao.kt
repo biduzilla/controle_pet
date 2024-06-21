@@ -20,4 +20,7 @@ interface BaseDao<T> {
     @Delete
     suspend fun delete(entity: T)
 
+    @Transaction
+    @Delete
+    suspend fun deleteList(entityList: List<T>)
 }

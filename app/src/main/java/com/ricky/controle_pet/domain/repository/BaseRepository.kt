@@ -9,4 +9,5 @@ interface BaseRepository<T> {
     suspend fun update(entity: T)
     suspend fun delete(entity: T)
     suspend fun deleteById(id: String)
+    suspend fun deleteList(list: List<T>)
 }

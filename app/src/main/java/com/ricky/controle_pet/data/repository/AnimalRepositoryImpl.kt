@@ -1,14 +1,22 @@
 package com.ricky.controle_pet.data.repository
 
 import com.ricky.controle_pet.data.dao.AnimalDao
+import com.ricky.controle_pet.data.dao.VacinaDao
+import com.ricky.controle_pet.data.dao.VermifugacaoDao
 import com.ricky.controle_pet.domain.model.Animal
 import com.ricky.controle_pet.domain.model.relationship.AnimalWithVacinas
 import com.ricky.controle_pet.domain.model.relationship.AnimalWithVermifugacao
 import com.ricky.controle_pet.domain.repository.AnimalRepository
+import com.ricky.controle_pet.domain.repository.VacinaRepository
+import com.ricky.controle_pet.domain.repository.VermifugacaoRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-class AnimalRepositoryImpl @Inject constructor(private val animalDao: AnimalDao) :
+class AnimalRepositoryImpl @Inject constructor(
+    private val animalDao: AnimalDao,
+    private val vermifugacaoRepository: VermifugacaoRepository,
+    private val vacinaRepository: VacinaRepository
+) :
     AnimalRepository {
     override suspend fun getAnimalWithVacinasById(id: String): AnimalWithVacinas? =
         animalDao.getAnimalWithVacinasById(id)
@@ -26,5 +34,16 @@ class AnimalRepositoryImpl @Inject constructor(private val animalDao: AnimalDao)
 
     override suspend fun delete(entity: Animal) = animalDao.delete(entity)
 
-    override suspend fun deleteById(id: String) = animalDao.deleteById(id)
+    override suspend fun deleteById(id: String) {
+        getAnimalWithVacinasById(id)?.let {
+            vacinaRepository.deleteList(it.vacinas)
+        }
+
+        getAnimalWithVermifugacaoById(id)?.let {
+            vermifugacaoRepository.deleteList(it.vermifugacoes)
+        }
+        deleteById(id)
+    }
+
+    override suspend fun deleteList(list: List<Animal>) = animalDao.deleteList(list)
 }

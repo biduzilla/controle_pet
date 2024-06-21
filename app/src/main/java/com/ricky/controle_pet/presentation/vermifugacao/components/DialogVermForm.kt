@@ -78,7 +78,7 @@ fun DialogVermForm(
             ) {
                 Text(
                     modifier = Modifier.align(Alignment.CenterHorizontally),
-                    text = stringResource(id = R.string.add_vacina),
+                    text = stringResource(id = R.string.add_verm),
                     style = MaterialTheme.typography.headlineMedium.copy(
                         fontWeight = FontWeight.Bold
                     )

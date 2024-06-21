@@ -11,5 +11,5 @@ data class AnimalWithVermifugacao (
         parentColumn = "id",
         entityColumn = "animalId"
     )
-    var vacinas: List<Vermifugacao> = emptyList()
+    var vermifugacoes: List<Vermifugacao> = emptyList()
 )

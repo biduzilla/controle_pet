@@ -31,4 +31,8 @@ class VermifugacaoRepositoryImpl @Inject constructor(private val vermifugacaoDao
     override suspend fun deleteById(id: String) {
         vermifugacaoDao.deleteById(id)
     }
+
+    override suspend fun deleteList(list: List<Vermifugacao>) {
+        return vermifugacaoDao.deleteList(list)
+    }
 }

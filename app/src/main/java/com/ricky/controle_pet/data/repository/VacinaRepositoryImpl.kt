@@ -29,5 +29,8 @@ class VacinaRepositoryImpl @Inject constructor(private val vacinaDao: VacinaDao)
     override suspend fun delete(entity: Vacina) = vacinaDao.delete(entity)
 
     override suspend fun deleteById(id: String) = vacinaDao.deleteById(id)
+    override suspend fun deleteList(list: List<Vacina>) {
+        return vacinaDao.deleteList(list)
+    }
 
 }

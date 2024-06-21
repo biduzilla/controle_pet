@@ -10,6 +10,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.ricky.controle_pet.navigation.BottomNav
+import com.ricky.controle_pet.navigation.Screens
 import com.ricky.controle_pet.presentation.home.components.BottomBar
 import com.ricky.controle_pet.presentation.home.components.TopBarPet
 
@@ -29,6 +30,7 @@ fun HomeScreen(
             isDark = state.isDark,
             onVoltar = { navController.popBackStack() },
             onClick = {
+                      navController.navigate(Screens.FormScreen.route+ "/${state.animal.id}")
             },
             onChangeTheme = { onEvent(HomeEvent.OnChangeTheme(it)) })
     },

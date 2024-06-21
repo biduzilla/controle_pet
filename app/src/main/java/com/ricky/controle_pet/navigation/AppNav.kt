@@ -51,6 +51,13 @@ fun AppNav() {
 
 
 
+        composableSlideHorizontally(Screens.FormScreen.route+ "/{${Constants.PARAM_PET_ID}}") {
+            val viewModel = hiltViewModel<FormViewModel>()
+            val state by viewModel.state.collectAsState()
+
+            FormScreen(state = state, navController = navController, onEvent = viewModel::onEvent)
+        }
+
         composableSlideHorizontally(Screens.FormScreen.route) {
             val viewModel = hiltViewModel<FormViewModel>()
             val state by viewModel.state.collectAsState()

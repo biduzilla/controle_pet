@@ -21,7 +21,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.ricky.controle_pet.R
 import com.ricky.controle_pet.presentation.vacinas.components.CardVacina
-import com.ricky.controle_pet.presentation.vacinas.components.DialogForm
+import com.ricky.controle_pet.presentation.vacinas.components.DialogVacinaForm
+import com.ricky.controle_pet.presentation.vermifugacao.components.CardVerm
+import com.ricky.controle_pet.presentation.vermifugacao.components.DialogVermForm
 import com.ricky.controle_pet.presentation.vacinas.components.EventoCompose
 
 @Composable
@@ -39,7 +41,7 @@ fun VacinasScreen(
         }
     }) { paddingValues ->
         if (state.isShowDialogForm) {
-            DialogForm(
+            DialogVacinaForm(
                 state = state,
                 onChangeNome = { onEvent(VacinaEvent.OnChangeNome(it)) },
                 onDismiss = { onEvent(VacinaEvent.OnDismissDialogForm) },

@@ -20,6 +20,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AddAPhoto
 import androidx.compose.material.icons.filled.ArrowBackIosNew
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -53,6 +54,7 @@ import com.ricky.controle_pet.presentation.form.components.DateDialog
 import com.ricky.controle_pet.presentation.form.components.DropdownCompose
 import com.ricky.controle_pet.presentation.form.components.ModalBottomSheetCompose
 import com.ricky.controle_pet.presentation.form.components.TextFieldCompose
+import com.ricky.controle_pet.presentation.vacinas.components.DialogRemoverMedicamento
 import com.ricky.controle_pet.utils.getTempUri
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -104,15 +106,36 @@ fun FormScreen(
         navController.popBackStack()
     }
 
+    if (state.isShowDialogRemover) {
+        DialogRemoverMedicamento(
+            onDimiss = { onEvent(FormEvent.ShowDialogRemover) },
+            onRemoverMedicamento = {
+                onEvent(FormEvent.DeletePet)
+            })
+    }
+
     Scaffold(topBar = {
         CenterAlignedTopAppBar(title = {
             Text(
-                text = stringResource(id = R.string.cadastrar_animal),
+                text = if (state.isUpdate) stringResource(id = R.string.atualizar_animal) else stringResource(
+                    id = R.string.cadastrar_animal
+                ),
                 style = MaterialTheme.typography.headlineMedium.copy(
                     fontWeight = FontWeight.Bold,
                 )
             )
         },
+            actions = {
+                if (state.isUpdate) {
+                    IconButton(onClick = { onEvent(FormEvent.ShowDialogRemover) }) {
+                        Icon(
+                            modifier = Modifier.size(28.dp),
+                            imageVector = Icons.Default.Delete,
+                            contentDescription = null,
+                        )
+                    }
+                }
+            },
             navigationIcon = {
                 IconButton(onClick = { navController.popBackStack() }) {
                     Icon(

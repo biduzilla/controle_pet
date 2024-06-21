@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Controle Pet+</string>
     <string name="cadastrar_animal">Cadastrar Pet</string>
+    <string name="atualizar_animal">Atualizar Pet</string>
     <string name="campo_obrigatorio">Campo obrigatório</string>
     <string name="nome_pet">Nome do Pet</string>
     <string name="pelagem">Pelagem</string>
@@ -16,9 +17,10 @@
     <string name="tamanho">Tamanho</string>
     <string name="cancelar">Cancelar</string>
     <string name="apagar">Apagar</string>
-    <string name="titulo_apagar_vacina">Deseja apagar registro da vacina?</string>
+    <string name="titulo_apagar">Deseja apagar registro?</string>
     <string name="add_vacina">Adicionar Vacina</string>
     <string name="nome_vacina">Vacina</string>
+    <string name="peso">Peso</string>
     <string name="salvar">Salvar</string>
     <string name="prox_vacina">Próximas vacinas</string>
     <string name="vacina_aplicada">Vacinas Aplicadas</string>

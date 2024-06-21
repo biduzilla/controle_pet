@@ -1,4 +1,4 @@
-package com.ricky.controle_pet.presentation.vacinas.components
+package com.ricky.controle_pet.presentation.vermifugacao.components
 
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.Spring
@@ -34,13 +34,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.ricky.controle_pet.domain.model.Vacina
+import com.ricky.controle_pet.domain.model.Vermifugacao
 import com.ricky.controle_pet.utils.formatterLocalDate
 
 @Composable
-fun CardVacina(
+fun CardVerm(
     modifier: Modifier = Modifier,
-    vacina: Vacina,
+    vermifugacao: Vermifugacao,
     icon: ImageVector = Icons.Default.Vaccines,
     onRemoverMedicamento: () -> Unit,
 ) {
@@ -50,8 +50,7 @@ fun CardVacina(
     }
 
     if (isShowDialog) {
-        DialogRemoverMedicamento(
-            onDimiss = { isShowDialog = false },
+        DialogRemoverMedicamento(onDimiss = { isShowDialog = false },
             onRemoverMedicamento = {
                 onRemoverMedicamento()
                 isShowDialog = false
@@ -99,7 +98,7 @@ fun CardVacina(
             ) {
                 Icon(tint= Color.Black,
                     imageVector =icon,
-                    contentDescription = vacina.nome,
+                    contentDescription = vermifugacao.nome,
                     modifier = Modifier
                         .size(80.dp)
                         .clip(shape = RoundedCornerShape(20.dp))
@@ -113,7 +112,13 @@ fun CardVacina(
                         .padding(start = 8.dp)
                 ) {
                     Text(
-                        text = vacina.nome,
+                        text = vermifugacao.nome,
+                        style = MaterialTheme.typography.headlineSmall.copy(
+                            fontWeight = FontWeight.Bold
+                        )
+                    )
+                    Text(
+                        text = "${vermifugacao.peso} Kg",
                         style = MaterialTheme.typography.headlineSmall.copy(
                             fontWeight = FontWeight.Bold
                         )
@@ -121,12 +126,12 @@ fun CardVacina(
                     Spacer(modifier = Modifier.height(8.dp))
                     Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                         Text(
-                            text = "Vacinado em ${formatterLocalDate(vacina.data)
+                            text = "Vacinado em ${formatterLocalDate(vermifugacao.data)
                             }",
                             style = MaterialTheme.typography.bodyLarge
                         )
                         Text(
-                            text = "Revacinar em ${formatterLocalDate(vacina.reforco)}",
+                            text = "Revacinar em ${formatterLocalDate(vermifugacao.reforco)}",
                             style = MaterialTheme.typography.bodyLarge
                         )
                     }

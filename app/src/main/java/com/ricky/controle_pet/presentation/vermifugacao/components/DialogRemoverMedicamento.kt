@@ -1,4 +1,4 @@
-package com.ricky.controle_pet.presentation.vacinas.components
+package com.ricky.controle_pet.presentation.vermifugacao.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
@@ -27,7 +27,7 @@ fun DialogRemoverMedicamento(
         shape = RoundedCornerShape(20.dp),
         text = {
             Text(
-                text = stringResource(id = R.string.titulo_apagar),
+                text = stringResource(id = R.string.titulo_apagar_vacina),
                 style = MaterialTheme.typography.bodyLarge
             )
         },
@@ -51,8 +51,8 @@ fun DialogRemoverMedicamento(
 @Preview
 @Composable
 private fun DialogAddProdutoPreview() {
-    com.ricky.controle_pet.presentation.vermifugacao.components.DialogRemoverMedicamento(
-        onRemoverMedicamento = {},
-        onDimiss = {}
-    )
+        DialogRemoverMedicamento(
+            onRemoverMedicamento = {},
+            onDimiss = {}
+        )
 }

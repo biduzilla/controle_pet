@@ -32,7 +32,7 @@ import com.ricky.controle_pet.presentation.form.components.TextFieldCompose
 import com.ricky.controle_pet.presentation.vacinas.VacinaState
 
 @Composable
-fun DialogForm(
+fun DialogVacinaForm(
     modifier: Modifier = Modifier,
     state: VacinaState,
     onChangeNome: (String) -> Unit,

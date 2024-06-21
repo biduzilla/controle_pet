@@ -17,7 +17,9 @@ sealed interface FormEvent {
     data class OnChangeSexo(val sexo: SexoEnum) : FormEvent
     data class OnChangePorte(val porte: PorteEnum) : FormEvent
     data object ShowDataPicker : FormEvent
+    data object ShowDialogRemover : FormEvent
     data class AddPet(val context: Context) : FormEvent
+    data object DeletePet : FormEvent
     data class OnChangeDate(val date: Long) : FormEvent
 
 }

@@ -1,10 +1,13 @@
 package com.ricky.controle_pet.presentation.form
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ricky.controle_pet.domain.model.Animal
 import com.ricky.controle_pet.domain.repository.AnimalRepository
+import com.ricky.controle_pet.utils.Constants
 import com.ricky.controle_pet.utils.bitmapToByteArray
+import com.ricky.controle_pet.utils.byteArrayToBitmap
 import com.ricky.controle_pet.utils.calculateAgeAndMonths
 import com.ricky.controle_pet.utils.uriToBitmap
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -17,11 +20,39 @@ import javax.inject.Inject
 
 @HiltViewModel
 class FormViewModel @Inject constructor(
-    private val animalRepository: AnimalRepository
+    private val animalRepository: AnimalRepository,
+    savedStateHandle: SavedStateHandle,
 ) :
     ViewModel() {
     private val _state = MutableStateFlow(FormState())
     val state = _state.asStateFlow()
+    private lateinit var petId: String
+
+    init {
+        savedStateHandle.get<String>(Constants.PARAM_PET_ID)?.let {
+            getAnimal(it)
+            petId = it
+        }
+    }
+
+    private fun getAnimal(id: String) {
+        viewModelScope.launch {
+            animalRepository.getById(id)?.let { animal ->
+                _state.value = _state.value.copy(
+                    isUpdate = true,
+                    nome = animal.nome,
+                    especie = animal.especie,
+                    pelagem = animal.pelagem,
+                    raca = animal.raca,
+                    porte = animal.porte,
+                    idade = calculateAgeAndMonths(animal.nascimento),
+                    nascimento = animal.nascimento,
+                    foto = byteArrayToBitmap(animal.foto!!),
+                    sexo = animal.sexo,
+                )
+            }
+        }
+    }
 
     fun onEvent(event: FormEvent) {
         when (event) {
@@ -157,6 +188,17 @@ class FormViewModel @Inject constructor(
                 )
             }
 
+            FormEvent.DeletePet -> {
+                viewModelScope.launch {
+                    animalRepository.deleteById(petId)
+                }
+            }
+
+            FormEvent.ShowDialogRemover -> {
+                _state.value = _state.value.copy(
+                    isShowDialogRemover = !_state.value.isShowDialogRemover
+                )
+            }
         }
     }
 }

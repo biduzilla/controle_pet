@@ -1,6 +1,5 @@
 package com.ricky.controle_pet.presentation.vermifugacao
 
-import com.ricky.controle_pet.domain.model.Vacina
 import com.ricky.controle_pet.domain.model.Vermifugacao
 import java.math.BigDecimal
 import java.time.LocalDate

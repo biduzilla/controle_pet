@@ -27,7 +27,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.ricky.controle_pet.domain.model.Vacina
 import com.ricky.controle_pet.domain.model.Vermifugacao
 import com.ricky.controle_pet.utils.formatterLocalDate
 

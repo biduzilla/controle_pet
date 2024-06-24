@@ -22,8 +22,6 @@ import androidx.compose.ui.unit.dp
 import com.ricky.controle_pet.R
 import com.ricky.controle_pet.presentation.vacinas.components.CardVacina
 import com.ricky.controle_pet.presentation.vacinas.components.DialogVacinaForm
-import com.ricky.controle_pet.presentation.vermifugacao.components.CardVerm
-import com.ricky.controle_pet.presentation.vermifugacao.components.DialogVermForm
 import com.ricky.controle_pet.presentation.vacinas.components.EventoCompose
 
 @Composable

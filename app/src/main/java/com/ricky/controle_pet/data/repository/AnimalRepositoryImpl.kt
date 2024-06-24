@@ -1,8 +1,6 @@
 package com.ricky.controle_pet.data.repository
 
 import com.ricky.controle_pet.data.dao.AnimalDao
-import com.ricky.controle_pet.data.dao.VacinaDao
-import com.ricky.controle_pet.data.dao.VermifugacaoDao
 import com.ricky.controle_pet.domain.model.Animal
 import com.ricky.controle_pet.domain.model.relationship.AnimalWithVacinas
 import com.ricky.controle_pet.domain.model.relationship.AnimalWithVermifugacao

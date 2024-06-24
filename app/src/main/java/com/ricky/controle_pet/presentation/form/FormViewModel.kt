@@ -102,6 +102,10 @@ class FormViewModel @Inject constructor(
                     foto = bitmapToByteArray(_state.value.foto!!)
                 )
 
+                if(_state.value.isUpdate){
+                    animal.id = petId
+                }
+
                 viewModelScope.launch {
                     animalRepository.insert(animal)
                     _state.value = _state.value.copy(
